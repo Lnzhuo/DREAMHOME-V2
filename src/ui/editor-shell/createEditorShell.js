@@ -5,7 +5,7 @@ export function createEditorShell({ projectName = '未命名客厅' } = {}) {
   root.dataset.editorMode = 'ai';
   root.innerHTML = `
     <header class="dh-topbar">
-      <button type="button" class="dh-brand" data-action="home" title="选择房间或户型新建项目"><span class="dh-brand-mark">D</span><div><strong>DREAMHOME</strong><span>空间设计工作室 · v${pkg.version}</span></div></button>
+      <button type="button" class="dh-brand" data-action="home" aria-label="打开设计首页" title="选择房间或户型新建项目"><span class="dh-brand-mark" aria-hidden="true">D</span><div><strong>DREAMHOME</strong><span>造梦家空间设计 · v${pkg.version}</span></div></button>
       <input class="dh-project-name" aria-label="项目名称" value="${projectName.replace(/["<>]/g, '')}" />
       <div class="dh-top-actions">
         <button class="dh-button dh-secondary" data-action="settings">API 管理</button>
@@ -17,7 +17,11 @@ export function createEditorShell({ projectName = '未命名客厅' } = {}) {
     </header>
     <main class="dh-workspace">
       <aside class="dh-left">
-        <section class="dh-panel dh-assets-section"><div class="dh-library-tabs"><button data-library="furniture" data-active="true">家具</button><button data-library="materials">材料</button></div><div class="dh-asset-library"></div><div class="dh-material-library" hidden></div></section>
+        <section class="dh-panel dh-assets-section" aria-labelledby="dh-library-heading">
+          <h2 class="dh-panel-title" id="dh-library-heading">资源库</h2>
+          <div class="dh-library-tabs"><button data-library="furniture" data-active="true">家具</button><button data-library="materials">材料</button></div>
+          <div class="dh-asset-library"></div><div class="dh-material-library" hidden></div>
+        </section>
         <section class="dh-panel dh-space-section"><div class="dh-panel-title">空间结构</div><div class="dh-space-tree"></div></section>
         <section class="dh-panel dh-projects-section"><div class="dh-panel-title">我的项目</div><div class="dh-project-panel"></div><div class="dh-reference-panel"></div></section>
       </aside>
@@ -27,14 +31,27 @@ export function createEditorShell({ projectName = '未命名客厅' } = {}) {
             <button type="button" data-editor-mode-choice="ai" aria-pressed="true">AI 助手</button>
             <button type="button" data-editor-mode-choice="manual" aria-pressed="false">手动调整</button>
           </div>
-          <button class="dh-button dh-secondary dh-focus-toggle" type="button" data-action="focus">收起面板</button><div class="dh-mobile-panels">
+          <button class="dh-button dh-secondary dh-focus-toggle" type="button" data-action="focus">收起面板</button>
+          <div class="dh-mobile-panels">
             <button type="button" data-panel="left" aria-expanded="false">资源库</button>
             <button type="button" data-panel="right" aria-expanded="false">打开助手</button>
           </div>
         </div>
         <div class="dh-toolbar" data-manual-controls hidden></div>
-        <div class="dh-canvas-wrap"><div class="dh-view-switch"><button data-view="3d" data-active="true">3D 编辑</button><button data-view="2d">2D 平面</button><button data-view="walk">漫游</button><button data-action="still">渲染效果图</button><button data-action="interior">室内取景</button><button data-action="overview">全景</button><button data-action="cutaway" aria-pressed="true">剖视</button></div><div class="dh-canvas"></div><div class="dh-walk-pad" aria-label="漫游移动"><button data-walk="w" aria-label="前进">↑</button><button data-walk="a" aria-label="左移">←</button><button data-walk="s" aria-label="后退">↓</button><button data-walk="d" aria-label="右移">→</button></div><div class="dh-floorplan" hidden></div><div class="dh-upload-state" role="status" hidden></div></div>
-        <div class="dh-canvas-hint">拖动旋转视角 · 滚轮缩放 · 漫游时用方向键移动、拖动环顾</div>
+        <div class="dh-view-switch">
+          <div class="dh-view-modes" role="group" aria-label="画布视图">
+            <button data-view="3d" data-active="true">3D 编辑</button><button data-view="2d">2D 平面</button><button data-view="walk">漫游</button>
+          </div>
+          <div class="dh-view-actions" role="group" aria-label="取景工具">
+            <button data-action="interior">室内取景</button><button data-action="overview">全景</button><button data-action="cutaway" aria-pressed="true">剖视</button><button data-action="still">渲染效果图</button>
+          </div>
+        </div>
+        <div class="dh-canvas-wrap">
+          <div class="dh-canvas"></div>
+          <div class="dh-walk-pad" aria-label="漫游移动"><button data-walk="w" aria-label="前进">↑</button><button data-walk="a" aria-label="左移">←</button><button data-walk="s" aria-label="后退">↓</button><button data-walk="d" aria-label="右移">→</button></div>
+          <div class="dh-floorplan" hidden></div><div class="dh-upload-state" role="status" hidden></div>
+        </div>
+        <div class="dh-canvas-hint">拖动旋转视角，滚轮缩放。漫游时用方向键移动。</div>
       </section>
       <aside class="dh-right" aria-label="AI 设计助手">
         <section class="dh-panel" data-manual-controls hidden><div class="dh-panel-title">家具属性</div><div class="dh-property-panel"><div class="dh-empty">选择一件家具开始编辑</div></div></section>

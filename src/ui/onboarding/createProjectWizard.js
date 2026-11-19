@@ -1,4 +1,3 @@
-import pkg from '../../../package.json' with { type: 'json' };
 import { mountStyleGallery } from './style-gallery.js';
 import { mountRoomDesigner } from './room-designer.js';
 import { ROOM_TEMPLATES, FLOORPLAN_TEMPLATES, ROOM_REFERENCES, VILLA_TEMPLATES, createSingleRoomDocument, createApartmentDocument, createVillaDocument } from '../../data/v2-contracts.js';
@@ -16,13 +15,76 @@ function preview(document) {
 function prepare(doc) { doc.assets=EXISTING_LUX3D_ASSETS.map(a=>structuredClone(a));return doc; }
 export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRecent,catalogAssets=[]}={}) {
   return new Promise((resolve) => {
-    const overlay=document.createElement('div');overlay.className='dh-preview-modal dh-onboarding';
-    overlay.innerHTML=`<div class="dh-onboarding-card"><header class="dw-header"><strong>DREAMHOME <small>设计工作室 · v${pkg.version}</small></strong>${canCancel?'<button type="button" class="dw-cancel" aria-label="取消新建">返回编辑器</button>':''}</header><div class="dw-intro"><div class="dw-intro-copy"><h1><span>从一句话，</span><span>布置一个家。</span></h1><p>说说想怎样使用这个空间，设计助手会帮你搭配家具、材质与灯光。</p><div data-room-designer></div><div class="dw-jump"><a href="#dw-room">设计单个房间</a><a href="#dw-plan">设计整套平层</a></div></div><section id="dw-styles" class="dw-style-gallery" aria-labelledby="dw-styles-title"><h2 id="dw-styles-title">精选风格搭配</h2><div class="dw-look-grid"></div><p role="status"></p></section></div><div data-recent></div><div data-lux-samples></div><div class="dh-onboarding-types"><section id="dw-room"><div class="dw-title"><div><h2>从空房间开始</h2><p>选择房间类型，后续可编辑形状、尺寸和门窗。</p></div></div><div class="dh-template-grid" data-mode="room"></div></section><section id="dw-plan"><div class="dw-title"><div><h2>设计整套平层</h2><p>从可编辑的示意户型开始，调整到符合你的家。</p></div></div><div class="dh-template-grid" data-mode="apartment"></div></section><section class="dh-onboarding-extension"><h2>别墅与庭院</h2><p>从多层示意户型开始，支持分层查看与楼梯、庭院参数。</p><div class="dh-template-grid" data-mode="villa"></div></section></div></div>`;
+    const overlay=document.createElement('div');overlay.className='dh-onboarding';
+    overlay.innerHTML=`
+      <div class="dh-onboarding-card" id="dw-home">
+        <header class="dw-header">
+          <a class="dw-brand" href="#dw-home">
+            <span class="dh-brand-mark" aria-hidden="true">D</span>
+            <span><strong>DREAMHOME</strong><small>造梦家空间设计</small></span>
+          </a>
+          <nav class="dw-nav" aria-label="选择设计起点">
+            <a href="#dw-styles">风格样板</a>
+            <a href="#dw-room">单个房间</a>
+            <a href="#dw-plan">整套平层</a>
+            <a href="#dw-villa">别墅庭院</a>
+          </nav>
+          ${canCancel?'<button type="button" class="dw-cancel">返回编辑器</button>':''}
+        </header>
+        <main class="dw-main">
+          <section class="dw-intro" aria-labelledby="dw-headline">
+            <div class="dw-intro-copy">
+              <h1 id="dw-headline">从一句话，<br>布置一个家。</h1>
+              <p>描述你想要的房间，生成家具、材质和灯光搭配，再打开 3D 编辑器调整细节。</p>
+            </div>
+            <figure class="dw-feature" data-featured-look></figure>
+            <div data-room-designer></div>
+          </section>
+          <div data-recent></div>
+          <section id="dw-styles" class="dw-style-gallery" aria-labelledby="dw-styles-title">
+            <div class="dw-title">
+              <h2 id="dw-styles-title">风格样板</h2>
+              <p>选一套喜欢的搭配，直接打开 3D 空间编辑。</p>
+            </div>
+            <div class="dw-look-grid"></div><p class="dw-feedback" role="status"></p>
+          </section>
+          <div data-lux-samples></div>
+          <div class="dh-onboarding-types">
+            <section id="dw-room">
+              <div class="dw-title"><h2>从空房间开始</h2><p>选择房间类型，再调整尺寸和门窗。</p></div>
+              <div class="dh-template-grid" data-mode="room"></div>
+            </section>
+            <section id="dw-plan">
+              <div class="dw-title"><h2>设计整套平层</h2><p>从可编辑的示意户型开始，布置每个房间。</p></div>
+              <div class="dh-template-grid" data-mode="apartment"></div>
+            </section>
+            <section id="dw-villa">
+              <div class="dw-title"><h2>别墅与庭院</h2><p>选择多层户型，编辑楼梯、庭院和各层房间。</p></div>
+              <div class="dh-template-grid" data-mode="villa"></div>
+            </section>
+          </div>
+        </main>
+      </div>`;
+    const app = document.getElementById('app');
+    const previousFocus = document.activeElement;
+    if (app) app.inert = true;
     document.body.appendChild(overlay);
-    const close=value=>{overlay.remove();resolve(value);};
+    const close = value => {
+      overlay.remove();
+      if (app) app.inert = false;
+      if (canCancel) previousFocus?.focus({ preventScroll: true });
+      resolve(value);
+    };
     mountRoomDesigner(overlay.querySelector('[data-room-designer]'),catalogAssets,close);
-    overlay.querySelector('.dw-cancel')?.addEventListener('click',()=>close(null));
-    mountStyleGallery(overlay.querySelector('#dw-styles'),catalogAssets,close);
+    const cancel = overlay.querySelector('.dw-cancel');
+    if (cancel) {
+      cancel.addEventListener('click', () => close(null));
+      overlay.addEventListener('keydown', event => {
+        if (event.key === 'Escape') close(null);
+      });
+      cancel.focus({ preventScroll: true });
+    }
+    mountStyleGallery(overlay.querySelector('#dw-styles'),catalogAssets,close,overlay.querySelector('[data-featured-look]'));
     const samples = overlay.querySelector('[data-lux-samples]');
     if (catalogAssets.length) {
       samples.className = 'dw-samples';
@@ -30,7 +92,7 @@ export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRec
       heading.textContent = 'Lux3D 原创样板间';
       const apartment = document.createElement('button');
       apartment.type = 'button'; apartment.className = 'dw-apartment-demo';
-      apartment.textContent = '打开三室两厅样板房 →';
+      apartment.textContent = '打开三室两厅样板房';
       apartment.onclick = () => close(createFurnishedApartment({assets:catalogAssets}));
       const header = document.createElement('div'); header.className='dw-samples-head';
       header.append(heading,apartment);
@@ -45,7 +107,8 @@ export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRec
         button.dataset.sample = sample.id;
         const image = document.createElement('img');
         image.src = scene.assets[0].thumbnailUrl;
-        image.alt = scene.assets[0].name;
+        image.alt = '';
+        image.loading = 'lazy';
         const title = document.createElement('strong');
         title.textContent = sample.name.replace(/^Lux3D\s*/, '');
         const details = document.createElement('small');
@@ -59,7 +122,7 @@ export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRec
     function addTemplate(container,template,create) {
       const button=document.createElement('button');button.className='dh-template-card';button.type='button';
       const doc=create();const d=template.defaultDimensions||{width:template.width,depth:template.depth};
-      button.innerHTML=`<div class="dw-preview ${template.reference?'dw-preview-photo':''}">${template.reference?`<img src="${template.reference.url}" alt="共享空间参考照片"><span class="dw-reference-label">参考照片</span>`:''}<div class="dw-outline">${preview(doc)}</div></div><div class="dw-card-copy"><strong></strong><span></span><small></small></div>`;
+      button.innerHTML=`<div class="dw-preview ${template.reference?'dw-preview-photo':''}">${template.reference?`<img src="${template.reference.url}" loading="lazy" alt=""><span class="dw-reference-label">参考照片</span>`:''}<div class="dw-outline">${preview(doc)}</div></div><div class="dw-card-copy"><strong></strong><span></span><small></small></div>`;
       button.querySelector('strong').textContent=template.name;button.querySelector('.dw-card-copy span').textContent=`${d.width} × ${d.depth} m`;button.querySelector('small').textContent=template.description || template.styleTags?.join(' · ')||(template.floors?`${template.floors} 层住宅`:'可编辑平层');
       button.onclick=()=>close(prepare(create()));container.appendChild(button);
     }

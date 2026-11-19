@@ -5,9 +5,9 @@ export function mountRoomDesigner(root, assets, open) {
   root.innerHTML=`
     <form class="dw-brief-form">
       <label for="dw-brief">描述你的房间</label>
-      <textarea id="dw-brief" required maxlength="1200" rows="3" placeholder="想要一个鼠尾草绿的客厅，下午能在窗边看书，留点地方放植物。"></textarea>
-      <div class="dw-examples"><button type="button">窗边阅读的绿调客厅</button><button type="button">暖陶色的双人卧室</button><button type="button">胡桃木餐厅，四人用餐</button></div>
-      <button class="dw-generate" type="submit">生成整套搭配 <span aria-hidden="true">↗</span></button>
+      <textarea id="dw-brief" required maxlength="1200" rows="3" placeholder="想要一个能在窗边看书的客厅，墙刷成鼠尾草绿，再留一角放植物。"></textarea>
+      <div class="dw-examples" role="group" aria-label="填入示例需求"><button type="button">窗边阅读</button><button type="button">暖陶卧室</button><button type="button">胡桃木餐厅</button></div>
+      <button class="dw-generate" type="submit">生成整套搭配</button>
     </form>
     <div class="dw-brief-result" aria-live="polite"></div>`;
   const form=root.querySelector('form'), field=form.querySelector('textarea');
@@ -40,7 +40,7 @@ export function mountRoomDesigner(root, assets, open) {
       result.replaceChildren(heading,summary);
       if(brief.note){const note=document.createElement('p');note.textContent='搭配意图 · '+brief.note;result.append(note);}
       if(omitted.length){const note=document.createElement('p');note.textContent='受空间或资源库限制，未放入'+omitted.join('、')+'。';result.append(note);}
-      result.append(action('打开这套 3D 设计 →',()=>open(scene)));
+      result.append(action('打开这套 3D 设计',()=>open(scene)));
     } catch(error) {
       if(current!==revision || !root.isConnected) return;
       result.textContent=error.message;
