@@ -64,7 +64,7 @@ def readiness(a):
     if not (placed and qa.get('placementTest','').startswith('通过')): reasons.append('缺少本模型的真实载入、拾取与保存恢复通过记录')
     if a['id'] not in grounded: reasons.append('逐顶点落地验证待完成')
     if entry and (entry.get('visual')!='passed_manual' or entry.get('placement')!='passed'): reasons.append('增量目检或摆放记录仍带备注')
-    if not re.search('已目检|已检查',review) or re.search('待|需复核|需视觉|需单独|疑似重复|瑕疵|异常|不可拆|不可分|差异|额外支架|细节较浅',review): reasons.append('外观仍有差异、备注或待复核')
+    if not re.search('已(?:对照|人工)?目检|已检查',review) or re.search('待|需复核|需视觉|需单独|疑似重复|瑕疵|异常|不可拆|不可分|差异|额外支架|细节较浅',review): reasons.append('外观仍有差异、备注或待复核')
     if a.get('scaleCalibrationRequired') or any((a.get('dimensions',{}).get(axis,{}).get('value') or 0)<=0 for axis in ('width','height','depth')): reasons.append('设计尺寸待校准')
     if not (a.get('thumbnailUrl') and a.get('planThumbnailUrl') and a.get('archive',{}).get('sha256') and qa.get('glbParsed')): reasons.append('归档、解析或缩略图证据不足')
     return {'id':a['id'],'taskId':a['providerTaskId'],'name':a['name'],'source':a.get('source'),'strictReady':not reasons,'scenePassed':placed,'sceneReport':report.relative_to(root).as_posix() if report else None,'visualReview':review,'reasons':reasons}
@@ -90,7 +90,7 @@ replay_file=ev/'portable-local-ai/replay/replayed-pack.json'
 replay=read(replay_file) if replay_file.exists() else {}
 live_file=ev/'portable-local-ai/live-cpu-response.json'
 live=read(live_file) if live_file.exists() else {}
-portable_ai_text=('独立临时目录实际解压预演主包及正式扩展包，校验两个 GGUF 后从根目录启动，'
+portable_ai_text=('在独立临时目录解压经过核验的 Windows 主包和本地多模态扩展包，校验两个 GGUF 后从根目录启动，'
                   '通过真实文字位移与撤销、图片改色与刷新恢复。双包哈希、推理 GPU 层数和独立端口见 verification/v2/portable-local-ai/combined-pack.json。'
                   if combined.get('passed') and combined.get('weightsExtractedFromZip') else '双包独立解压的验证进度以 verification/v2/portable-local-ai/ 的实际结果为准。')
 if not combined.get('passed') and replay.get('passed') and live.get('timeline',{}).get('colorApplied') and any(c.get('appliedAndUndone') for c in live.get('cases',[])):
@@ -101,6 +101,8 @@ reservations=read(root/'data/lux3d-v2/reservations.json')
 frozen=sum(r.get('frozenCredits',0) or 0 for r in reservations)
 apartment_proof=read(docs/'verification/v2/residence/apartment-ai.json') if (docs/'verification/v2/residence/apartment-ai.json').exists() else {}
 apartment_text=(f"在 {apartment_proof['placed']} 件家具的整套住宅中，选中茶几右移 10 厘米，逐件比对其余 {apartment_proof['othersUnchanged']} 件，撤销后恢复原坐标。" if apartment_proof.get('undoRestored') and not apartment_proof.get('pageErrors') else '此快照尚无整套住宅的独立推理验收记录。')
+large_proof=read(docs/'verification/v2/residence/large-home-ai.json') if (docs/'verification/v2/residence/large-home-ai.json').is_file() else {}
+large_text=('四个房间共 120 个摆放实例，真实本机 CPU 推理移动第 120 件沙发，并按图片给另一房间的茶几改色；需要覆盖全屋的操作返回澄清。' if large_proof.get('passed') else '未收录大户型专项。')
 def write(name,body): (docs/name).write_text(body.strip()+'\n',encoding='utf-8')
 write('DREAMHOME_V2_ACCEPTANCE.md',f"""# DREAMHOME V2 验收记录
 
@@ -115,6 +117,7 @@ write('DREAMHOME_V2_ACCEPTANCE.md',f"""# DREAMHOME V2 验收记录
 | 外观与材料 | 家具实例、墙和地板应用材质并保存在项目中 | verification/v2/browser-checks.json；data/library/material-drag-e2e.json |
 | 模型落地 | 快照目录中 {checked_ground}/{len(assets)} 件已取得实际顶点落地记录；容差 {floor_checks.get('toleranceMeters',0):.3f} 米 | data/library/vertex-floor-e2e.json |
 | 已布置全套住宅 | {named['residence']['placements']} 件摆放、{named['residence']['lux3dPlacements']} 个 Lux3D 实例，在新浏览器会话从分享文件恢复 {named['restored']} 件 | verification/v2/residence/residence-checks.json |
+| 大场景的本机 AI | {large_text} | verification/v2/residence/large-home-ai.json |
 | 整套住宅的本机 AI | {apartment_text} | verification/v2/residence/apartment-ai.json |
 | AI 修改 | {ai_text} | verification/v2/local-ai/ai-e2e.json |
 | 用户凭据 | 设置界面可填写 Aholo 和 LLM；实测平台只读鉴权，会话隔离与删除由测试覆盖 | verification/v2/05-service-settings.png；tests/byok-security.test.js |
@@ -167,6 +170,6 @@ write('DREAMHOME_V2_FINAL_REPORT.md',f"""# DREAMHOME V2 交付说明
 
 开发入口为 npm ci、npm run dev。生产构建为 npm run build，运行 npm start。离线 Windows 包自带 Node 及依赖，可以直接双击启动。完整验收步骤、截图、演示素材和专项回归见 DREAMHOME_V2_ACCEPTANCE.md 及 verification/v2。资产来源、许可与生成来源分别在 ASSET_LICENSE_LEDGER.csv 和 LUX3D_CREDIT_LEDGER.csv 登记。
 
-本交付未向赛事平台提交或部署公网服务。庭院与建筑参数用于概念设计展示。现有窗洞、开间、门扇和实物尺寸仍需以现场测量为准。
+公网体验地址为 https://dreamhome.8-218-155-239.sslip.io/ 。网站提供 /release.json 记录当前版本，可比对其中 indexSHA256 与随包 docs/verification/release-snapshot.json。应用源码在 https://github.com/Lnzhuo/DREAMHOME-V2 ，各次上线对应的提交与公网浏览器记录随交付提供。庭院与建筑参数用于概念设计展示。现有窗洞、开间、门扇和实物尺寸仍需以现场测量为准。
 """)
 print(now,len(assets),len(lux),ready,count,recorded,ai_text)

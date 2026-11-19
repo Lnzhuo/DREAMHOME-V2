@@ -50,11 +50,19 @@ function scopeLargeScene(scene, catalog, message, selection, image) {
   // A clarification can narrow an earlier whole-house request to one room.
   const [prior,reply]=message.toLowerCase().split('\n用户的新回复：');
   const latest=(reply ?? prior).split('\n图片中按像素占比')[0];
-  const identifies=(r,text)=>text.includes(r.id.toLowerCase()) || (r.name && text.includes(r.name.toLowerCase()));
+  const identifiers=text=>new Set(text.match(/[a-z0-9_-]+/g) || []);
+  const latestIds=identifiers(latest);
+  const identifies=(r,text)=>latestIds.has(r.id.toLowerCase()) || (r.name && text.includes(r.name.toLowerCase()));
   const newScope=reply!==undefined && (rooms.some(r=>identifies(r,latest)) || scene.assets.some(a=>identifies(a,latest)) || /选中|所选|当前房间/.test(latest));
   const intent=reply!==undefined && !newScope ? prior.split('\n助手对该要求的提问：')[0]+' '+latest : latest;
   const query=intent.replace(/(?:其他|其余)[^，。！？；\n]{0,16}(?:不变|不动|保持原样)/g,'');
-  const namedRooms=rooms.filter(r=>query.includes(r.id.toLowerCase()) || (r.name && query.includes(r.name.toLowerCase())));
+  const ids=identifiers(query);
+  const names=new Set();
+  let remaining=query;
+  for(const name of [...new Set(rooms.map(r=>r.name?.toLowerCase()).filter(Boolean))].sort((a,b)=>b.length-a.length)) {
+    if(remaining.includes(name)) {names.add(name);remaining=remaining.split(name).join(' ');}
+  }
+  const namedRooms=rooms.filter(r=>ids.has(r.id.toLowerCase()) || names.has(r.name?.toLowerCase()));
   const selected=scene.placements.find(p=>p.id===selection.placementId);
   const current=rooms.find(r=>r.id===selection.roomId);
   const selectedOnly=Boolean(selected && (!namedRooms.length || namedRooms.some(r=>r.id===selected.containerId)) && /选中|所选|这一件|这件|selected/.test(query) && !/以及|同时调整/.test(query));
@@ -79,7 +87,7 @@ function scopeLargeScene(scene, catalog, message, selection, image) {
   }
   const candidates=scene.placements.map((p,index)=>{
     const match=nameMatches.get(p.assetId);
-    const byId=query.includes(p.id.toLowerCase());
+    const byId=ids.has(p.id.toLowerCase());
     const hit=byId || Boolean(match?.hit);
     const nameScore=byId ? 120 : (match?.score || 0);
     const selectedTarget=selectedOnly && p.id===selected.id;
@@ -128,6 +136,10 @@ export async function generateSceneCommand({ message, image, sceneDocument, sele
   });
   const body = await response.json();
   if (!response.ok) {
+    const detail=[body.error?.code,body.error?.type,body.error?.message].join(' ');
+    if([400,413,422].includes(response.status) && /context[_ ]length|exceed(?:s|ed)?[_ ](?:the )?(?:available )?context|context[_ ]size|too many tokens/i.test(detail)) {
+      return clarification('请选定一件家具或一个房间；若附有图片，请裁出要参考的区域后重试。','场景与附件超过本次模型的上下文容量，此次没有生成修改。');
+    }
     const error = new Error(`LLM 请求失败：HTTP ${response.status}`);
     error.status = 502;
     throw error;

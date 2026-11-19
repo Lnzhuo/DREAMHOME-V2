@@ -59,7 +59,7 @@ def frozen_reports(files,contents,index,node):
         if ai in files: required.append(ai)
         combined='docs/verification/v2/portable-local-ai/combined-pack.json'
         if combined in files: required.append(combined)
-        for evidence in ['docs/verification/v2/residence/apartment-ai.json','docs/verification/v2/portable-local-ai/replay/replayed-pack.json','docs/verification/v2/portable-local-ai/live-cpu-response.json']:
+        for evidence in ['docs/verification/v2/residence/large-home-ai.json','docs/verification/v2/residence/apartment-ai.json','docs/verification/v2/portable-local-ai/replay/replayed-pack.json','docs/verification/v2/portable-local-ai/live-cpu-response.json']:
             if evidence in files: required.append(evidence)
         required+=['src/data/v2-contracts.js','src/data/villa-site.js','src/data/scene-operations.js','src/data/scene-document.js','package.json','data/library/new-lux3d-progress.json']
         required+=['scripts/assets/write-ledger.py','scripts/assets/room-references-extra.json']

@@ -1,0 +1,1039 @@
+{
+  "createdAt": "2026-11-19 19:06 中国标准时间",
+  "catalogued": 84,
+  "strictReady": 48,
+  "items": [
+    {
+      "id": "asset-1089f183-dc58-47f1-98bd-621d204f31aa",
+      "taskId": "8396095",
+      "name": "落地灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/placement-e2e.json",
+      "visualReview": "已检查模型缩略图总览",
+      "reasons": []
+    },
+    {
+      "id": "asset-4afeba6d-df1c-4ae6-aaac-91d8bb781133",
+      "taskId": "8394445",
+      "name": "奶油色双人沙发",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/placement-e2e.json",
+      "visualReview": "已检查模型缩略图总览",
+      "reasons": []
+    },
+    {
+      "id": "asset-ba751b6b-6880-417c-b4f2-e5d686580d06",
+      "taskId": "8395285",
+      "name": "原木茶几",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/placement-e2e.json",
+      "visualReview": "已检查模型缩略图总览",
+      "reasons": []
+    },
+    {
+      "id": "asset-7583bd76-f81f-4062-92c4-19a207ca6b59",
+      "taskId": "8421752",
+      "name": "现代双人床",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/placement-repair-e2e.json",
+      "visualReview": "已检查模型缩略图总览",
+      "reasons": []
+    },
+    {
+      "id": "asset-1ae89277-20fe-4880-be6e-b8413fb0db9c",
+      "taskId": "8422657",
+      "name": "现代冰箱",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/refrigerator-e2e.json",
+      "visualReview": "已检查缩略图：冰箱轮廓可辨，侧面纹理存在瑕疵",
+      "reasons": [
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-2b7e5e57-f8cd-4761-b206-8ca494cd7035",
+      "taskId": "8422654",
+      "name": "现代马桶",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/toilet-e2e.json",
+      "visualReview": "已检查缩略图：主体轮廓正常，侧面存在额外支架细节",
+      "reasons": [
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-f35b5ca4-bf99-4832-b419-88326adb556f",
+      "taskId": "8423649",
+      "name": "现代淋浴隔断",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/shower-e2e.json",
+      "visualReview": "已检查缩略图，淋浴房主体与五金可辨，白色透明面细节较浅",
+      "reasons": [
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-b4d7f513-0798-49e6-b93e-1af74a425331",
+      "taskId": "8423648",
+      "name": "现代洗手台盆柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/batch2-e2e.json",
+      "visualReview": "已目检真实缩略图，主体形态及材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-fbf3b311-b1c2-4149-a6ef-ec8a780985b3",
+      "taskId": "8423657",
+      "name": "滚筒洗衣机",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/batch2-e2e.json",
+      "visualReview": "已目检真实缩略图，主体形态及材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-285ab9cb-a052-41fe-9bcb-29b732c2f04e",
+      "taskId": "8424854",
+      "name": "单人布艺躺椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080109301.json",
+      "visualReview": "已目检真实缩略图：椅体与材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-5433f230-6180-4cb0-b036-048e817a944f",
+      "taskId": "8424857",
+      "name": "L形转角沙发",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080149327.json",
+      "visualReview": "已目检：L 形沙发主体和材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-ed87fa18-6d85-4d70-b4e4-29780048184c",
+      "taskId": "8424856",
+      "name": "弧形模块沙发",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080149327.json",
+      "visualReview": "已目检：弧形沙发可辨，侧面附带异常柜状结构，需复核",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-7aee6357-9a46-401f-95c1-3c7803eb3ba7",
+      "taskId": "8424855",
+      "name": "现代单人休闲椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080174839.json",
+      "visualReview": "已目检：休闲椅形态与材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-7e53814f-49f3-475a-8235-3105955a338f",
+      "taskId": "8425299",
+      "name": "单人床1.2米",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080275922.json",
+      "visualReview": "已目检：床体清晰；参考比例显示床长偏短，需单独校准",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核",
+        "设计尺寸待校准"
+      ]
+    },
+    {
+      "id": "asset-0ee1fe42-02a9-41e2-865a-79e6788d3c18",
+      "taskId": "8425833",
+      "name": "单门厨房地柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080436965.json",
+      "visualReview": "已目检：主体、结构与材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-4d450ef9-8295-4e00-904c-adfd8baee46b",
+      "taskId": "8425840",
+      "name": "独立冷冻柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/freezer-retest.json",
+      "visualReview": "已目检：主体、结构与材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-92c78578-6626-46a3-b93b-aefe217f733f",
+      "taskId": "8425729",
+      "name": "四人矩形餐桌",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080436965.json",
+      "visualReview": "已目检：主体、结构与材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-e43e3e33-b821-4d85-a03f-f5e72cd936e6",
+      "taskId": "8426212",
+      "name": "简约书桌",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080594514.json",
+      "visualReview": "已目检：书桌主体及纹理可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-f75036dd-398c-48ad-a954-b357d5adc4d0",
+      "taskId": "8426569",
+      "name": "翻斗鞋柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795080689783.json",
+      "visualReview": "已目检：鞋柜形态及材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-3b59d26f-0af8-4db7-be63-ca221c6dfe62",
+      "taskId": "8426570",
+      "name": "矩形短绒地毯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/carpet-repair.json",
+      "visualReview": "已目检：地毯水平放置，贴图可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-79e28f4a-ad7b-4a51-ac29-2721b973f613",
+      "taskId": "8426568",
+      "name": "圆形吸顶灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/ceiling-lamp-repair.json",
+      "visualReview": "已目检：灯盘水平、外观清晰",
+      "reasons": []
+    },
+    {
+      "id": "asset-6afb3d66-b4a6-448c-8701-77202aee7fd5",
+      "taskId": "8426905",
+      "name": "双人床1.5米",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/double-bed-repair.json",
+      "visualReview": "已目检：床体与纹理清晰",
+      "reasons": []
+    },
+    {
+      "id": "asset-d7ebefb5-2061-4aaf-a4b7-bc25603f3d58",
+      "taskId": "8427140",
+      "name": "六人餐桌椅组合（整体）",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795081010814.json",
+      "visualReview": "需复核：餐桌与六把椅子合成一体，椅子不能独立编辑",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-e3a75526-b9b0-4471-b7f7-3fb00c3cd25e",
+      "taskId": "8427279",
+      "name": "双门厨房地柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795081127781.json",
+      "visualReview": "已目检：双门地柜主体和材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-0ce8a02e-57da-4cad-9a2d-f12de8cbe6f8",
+      "taskId": "8427862",
+      "name": "木饰面双开门冰箱",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795081215430.json",
+      "visualReview": "已目检：木饰面双开门样式，与首批白色上下门冰箱不同",
+      "reasons": []
+    },
+    {
+      "id": "asset-536b8ac6-e300-4e2d-88cb-d16555ddf5af",
+      "taskId": "8427409",
+      "name": "双盆浴室柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/double-basin-retest.json",
+      "visualReview": "已目检：双盆柜主体和材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-41a51341-6a6b-4c6b-a080-090b2690b159",
+      "taskId": "8428474",
+      "name": "实拍图生青绿色木餐椅",
+      "source": "lux3d_image",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795081562778.json",
+      "visualReview": "已目检：椅体与深青色参考相近，座面更浅，存在外观差异",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-222025bb-403e-4e99-9561-51c47a938327",
+      "taskId": "8428085",
+      "name": "带抽屉书桌",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795081654926.json",
+      "visualReview": "已目检：带抽屉书桌主体及材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-56c98ee0-ecc1-4cae-bebc-a0116b678454",
+      "taskId": "8428703",
+      "name": "长条厨房吸顶灯",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/linear-lamp-retest.json",
+      "visualReview": "需复核：外观近似木条，灯面不明显",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-ef83b441-7825-4a3f-90cb-18bad9b39efa",
+      "taskId": "8429029",
+      "name": "玄关双门鞋柜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795081966359.json",
+      "visualReview": "需复核：双门鞋柜局部透空且底部有异常片状结构",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-e5a646ce-a22c-412f-baec-e13976286b14",
+      "taskId": "8429588",
+      "name": "木框装饰画",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795082020671.json",
+      "visualReview": "已目检：木框装饰画图案和边框可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-6f936f56-850e-42e8-9c55-f0be1c42e901",
+      "taskId": "8429319",
+      "name": "现代双层落地窗帘",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795082056978.json",
+      "visualReview": "已目检：窗帘形态和褶皱可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-630d48f2-9e35-420e-a4c0-968215d4b8fb",
+      "taskId": "8429792",
+      "name": "矩形沙发抱枕",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/cushion-round-rug-retest.json",
+      "visualReview": "已目检：抱枕形态可辨，原座椅高度规则误报已修正",
+      "reasons": []
+    },
+    {
+      "id": "asset-8a476869-1458-48c4-88fc-ba8cbef06771",
+      "taskId": "8429879",
+      "name": "高杆室内盆栽",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795082435574.json",
+      "visualReview": "已目检：室内盆栽形态可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-0983b09e-9fa2-4923-b1cd-b4d342b89356",
+      "taskId": "8430722",
+      "name": "圆形短绒地毯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/cushion-round-rug-retest.json",
+      "visualReview": "已目检：圆形地毯轴向修正后水平，中心近白色",
+      "reasons": []
+    },
+    {
+      "id": "asset-20d3c244-13dc-4daf-9791-ad4abc6748b0",
+      "taskId": "8430601",
+      "name": "现代平板电视",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795082479948.json",
+      "visualReview": "已目检：平板电视与底座可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-29c758c3-01c2-4ef1-bbb9-b621add47be0",
+      "taskId": "8430845",
+      "name": "低矮双人床1.8米",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": false,
+      "sceneReport": null,
+      "visualReview": "需单独校准：床头朝 -Z，但参考宽 1.8 m 对应床长约 1.59 m，比例偏短",
+      "reasons": [
+        "缺少本模型的真实载入、拾取与保存恢复通过记录",
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核",
+        "设计尺寸待校准"
+      ]
+    },
+    {
+      "id": "asset-1a1603fc-5c71-4e0c-8c64-f2e60394625e",
+      "taskId": "8431052",
+      "name": "圆形四人餐桌",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": false,
+      "sceneReport": null,
+      "visualReview": "已目检：圆餐桌形态和材质可辨",
+      "reasons": [
+        "缺少本模型的真实载入、拾取与保存恢复通过记录",
+        "增量目检或摆放记录仍带备注"
+      ]
+    },
+    {
+      "id": "asset-900f5cf1-8c12-4309-92cc-0c75d44001b0",
+      "taskId": "8432119",
+      "name": "三抽屉厨房地柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083006958.json",
+      "visualReview": "已目检：厨房地柜主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-89ed0bdc-86c6-4337-96ee-5f37b70f1abd",
+      "taskId": "8432151",
+      "name": "小型台式冰箱",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083043705.json",
+      "visualReview": "已目检：小型台式冰箱主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-d1ab13b2-58a8-44db-a86e-daf97243ccda",
+      "taskId": "8432137",
+      "name": "带抽屉浴室柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083043705.json",
+      "visualReview": "已目检：带抽屉浴室柜主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-a5778584-e223-4995-9abd-6bef825eae5d",
+      "taskId": "8432516",
+      "name": "玻璃球吊灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083078097.json",
+      "visualReview": "已目检：玻璃球吊灯主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-c0301713-f90f-410e-81f9-acf1d727927e",
+      "taskId": "8432276",
+      "name": "转角书桌",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083078097.json",
+      "visualReview": "已目检：转角书桌主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-d9bba81b-8141-40f9-8e50-089eebdcad19",
+      "taskId": "8433313",
+      "name": "长方形门垫",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083434729.json",
+      "visualReview": "需复核：门垫纹理呈木条状，和常见织物门垫有差异",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-5a11bc8a-61d1-4c84-9ce2-a5f957966fc5",
+      "taskId": "8433459",
+      "name": "厨房水槽柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083434729.json",
+      "visualReview": "已目检：厨房水槽柜主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-5ee21916-9519-4f82-997a-2a62626f8d8f",
+      "taskId": "8433400",
+      "name": "带抽屉储物床",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083434729.json",
+      "visualReview": "已目检：带抽屉储物床主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-63d41713-8f9d-4083-b876-8be3f3d261ce",
+      "taskId": "8433278",
+      "name": "玄关换鞋凳",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083434729.json",
+      "visualReview": "需复核：换鞋凳与鞋子为整体，鞋子不能独立编辑",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-43315b49-9d28-4a94-8be3-aa202369c6fc",
+      "taskId": "8434127",
+      "name": "圆形浴室镜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083639720.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-9bccf210-f56b-451d-bba0-97777273c59b",
+      "taskId": "8434403",
+      "name": "金属圆盘吊灯",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083703033.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-04c2c984-b284-446b-9bd4-86f033f923c5",
+      "taskId": "8434389",
+      "name": "独立微波炉",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083752714.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-44d97b6b-8c45-4ff0-aeac-4df9c0fe01f3",
+      "taskId": "8434434",
+      "name": "带抽屉换鞋凳",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083752714.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-b24fecd7-97c5-463e-903d-25bd439efc4f",
+      "taskId": "8434399",
+      "name": "升降办公桌",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795083781736.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-28c1092f-55e8-40f5-ab31-e8e4b3952310",
+      "taskId": "8434903",
+      "name": "布艺床头靠垫",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084003733.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-d68e0239-421a-48ee-89f6-1cd16f4a2912",
+      "taskId": "8435231",
+      "name": "实拍参考白瓷扁圆花瓶",
+      "source": "lux3d_image",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084076257.json",
+      "visualReview": "已对照目检：白瓷花瓶轮廓与参考接近",
+      "reasons": []
+    },
+    {
+      "id": "asset-72686e96-573f-4cbd-8cad-3e5aff4369ce",
+      "taskId": "8435118",
+      "name": "实拍做旧木质长凳",
+      "source": "lux3d_image",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/photo-stools-retest.json",
+      "visualReview": "已对照目检：做旧长凳可辨，腿部结构与单视角照片存在差异",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-c3e11c62-24df-4db5-9dc3-7a2afe2a108c",
+      "taskId": "8435206",
+      "name": "实拍参考圆座木高凳",
+      "source": "lux3d_image",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/photo-stools-retest.json",
+      "visualReview": "已对照目检：高凳主体与参考接近，横撑细节存在差异",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-a19f010f-229b-4377-ab4e-e618851fcdb8",
+      "taskId": "8435249",
+      "name": "实拍参考叠层金属吊灯",
+      "source": "lux3d_image",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084264729.json",
+      "visualReview": "已对照目检：吊灯层叠形态可辨，侧面存在明显白斑，细节与参考有差异",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-1927cbeb-5806-4fa2-899b-fcc1b4e5f65b",
+      "taskId": "8435780",
+      "name": "扶手单人沙发",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084354788.json",
+      "visualReview": "需复核：扶手单椅与另一件现代休闲椅外观高度相似，疑似重复",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-45370188-c3a2-41c4-9c8f-5a9d4462d288",
+      "taskId": "8435943",
+      "name": "木质床头柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084429034.json",
+      "visualReview": "已目检：木质床头柜主体与材质可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-a2eee250-d8e6-407e-97aa-bfb5516ed08d",
+      "taskId": "8436169",
+      "name": "转角厨房地柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084524766.json",
+      "visualReview": "已目检：转角厨房地柜主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-a455f984-d050-429d-a04f-57e65d9b5d7d",
+      "taskId": "8436710",
+      "name": "小型台式烤箱",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084669138.json",
+      "visualReview": "已目检：小型台式烤箱主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-ccac60ed-5183-4196-b0c8-47b94946aa79",
+      "taskId": "8436879",
+      "name": "办公转椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084804393.json",
+      "visualReview": "已目检：办公转椅主体与轮座可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-157e91d6-fd85-4522-b830-2c3def4f8013",
+      "taskId": "8437082",
+      "name": "壁挂玄关挂钩",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084835668.json",
+      "visualReview": "已目检：壁挂挂钩主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-4c4b5b76-b01d-4de3-8a7e-dcea7849b081",
+      "taskId": "8437036",
+      "name": "餐桌线性吊灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084835668.json",
+      "visualReview": "已目检：餐桌线性吊灯可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-7490c43f-664a-4b4d-9fa9-9aae8b3ecfc8",
+      "taskId": "8436369",
+      "name": "矩形镜柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795084879435.json",
+      "visualReview": "已目检：矩形镜柜主体可辨",
+      "reasons": []
+    },
+    {
+      "id": "asset-dfd55283-d9e0-4091-90bd-2c615a0af045",
+      "taskId": "8437500",
+      "name": "木框休闲椅",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085012470.json",
+      "visualReview": "需复核：木框休闲椅与其他已入库扶手椅高度相似，疑似重复",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-38761f3d-4f75-40c5-8525-c3c02e884f2b",
+      "taskId": "8437864",
+      "name": "木质餐椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085147142.json",
+      "visualReview": "已人工目检：餐椅外形、材质和方向正常",
+      "reasons": []
+    },
+    {
+      "id": "asset-6fb7a5f0-43e1-4dce-bb0f-36c055f81d07",
+      "taskId": "8437757",
+      "name": "双抽屉床头柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085176353.json",
+      "visualReview": "已人工目检：双抽屉床头柜外形、材质和方向正常",
+      "reasons": []
+    },
+    {
+      "id": "asset-c73d0ce4-ec40-4d18-857f-15bd1054e7fc",
+      "taskId": "8437865",
+      "name": "窄型厨房拉篮柜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085176353.json",
+      "visualReview": "已人工目检：拉篮呈打开状态，内部物品与柜体不可分；需复核适用场景",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-44d4a0cc-8a8e-44cb-97e5-7ddcd13348cd",
+      "taskId": "8438394",
+      "name": "洗烘一体机",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085332572.json",
+      "visualReview": "已人工目检：洗烘机轮廓清楚，门圈与底部有浅木色块状异常，需复核",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-8166a878-767b-4fb9-b4f4-d68c4a61a084",
+      "taskId": "8438850",
+      "name": "布艺圆罩吊灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085529400.json",
+      "visualReview": "已人工目检：圆罩吊灯轮廓及方向正常",
+      "reasons": []
+    },
+    {
+      "id": "asset-63852626-2c66-4fd4-b939-ecde66eaa39b",
+      "taskId": "8438855",
+      "name": "玄关穿衣镜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085557996.json",
+      "visualReview": "已人工目检：穿衣镜形似箱柜，镜面不清晰且厚度异常，需复核",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-73d55d7b-58f5-4359-83fa-f01cb31ec71a",
+      "taskId": "8439250",
+      "name": "圆形沙发靠垫",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085585250.json",
+      "visualReview": "已人工目检：圆靠垫侧面出现木色块状异常，需复核",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-ebc19250-e892-4349-9062-836d3d6e08fe",
+      "taskId": "8438024",
+      "name": "壁挂浴室收纳柜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085616489.json",
+      "visualReview": "已人工目检：柜门呈打开状态，内置毛巾及瓶罐与柜体不可分，需复核适用场景",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-39e7c7d8-9e75-4942-b48d-4c363ffc7fbf",
+      "taskId": "8438694",
+      "name": "网布办公椅",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085783047.json",
+      "visualReview": "已人工目检：办公椅轮廓正常，但靠背像软垫而非提示词网布，外观存在差异，需复核",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-5c641c48-bf17-4f1d-aad9-b6020320445b",
+      "taskId": "8439653",
+      "name": "窄型床头柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085840454.json",
+      "visualReview": "已人工目检：窄型床头柜外形、材质和方向正常",
+      "reasons": []
+    },
+    {
+      "id": "asset-0eb3585d-3d8c-4afc-bc37-65f022c657ac",
+      "taskId": "8439806",
+      "name": "厨房高柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085913094.json",
+      "visualReview": "已人工目检：厨房高柜外形、材质和方向正常",
+      "reasons": []
+    },
+    {
+      "id": "asset-32626009-0c0d-4897-8c95-2fc83644090d",
+      "taskId": "8439931",
+      "name": "浴室高柜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085943032.json",
+      "visualReview": "已人工目检：浴室高柜内置瓶罐和毛巾与柜体不可分，需复核适用场景",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-ecf2e586-a8c6-455d-b456-a169a0deaa69",
+      "taskId": "8439688",
+      "name": "布艺餐椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795085943032.json",
+      "visualReview": "已人工目检：布艺餐椅外形、材质和方向正常",
+      "reasons": []
+    },
+    {
+      "id": "asset-f9f983c6-14dc-4f6e-b85c-a4bb03f15f1e",
+      "taskId": "8440346",
+      "name": "独立烘干机",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086132549.json",
+      "visualReview": "已人工目检：烘干机侧面纹理不平整，门圈有木色块状异常，需复核",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-1ffb5922-5e48-48df-8ece-fa09dafd3e9c",
+      "taskId": "8440503",
+      "name": "木质书架",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086157827.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-5434296a-6a1b-4075-a1fa-2fccf61174a1",
+      "taskId": "8440674",
+      "name": "三头餐厅吊灯",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086230286.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-a2cf68c1-72ad-472e-83c9-e307d183472c",
+      "taskId": "8440705",
+      "name": "玄关储物柜",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086257097.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    },
+    {
+      "id": "asset-f620cf27-cd9e-4271-8258-8cd643660388",
+      "taskId": "8440713",
+      "name": "宽叶室内盆栽",
+      "source": "lux3d_text",
+      "strictReady": false,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086285169.json",
+      "visualReview": "待人工检查真实缩略图",
+      "reasons": [
+        "增量目检或摆放记录仍带备注",
+        "外观仍有差异、备注或待复核"
+      ]
+    }
+  ]
+}

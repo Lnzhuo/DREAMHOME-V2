@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 import { handleAiRequest } from '../../server/ai/handler.js';
+import sharp from 'sharp';
 
 const root=fileURLToPath(new URL('../../',import.meta.url));
 process.chdir(root);
@@ -59,7 +60,7 @@ try {
     if(url===upstream+'/v1/chat/completions') {
       const body=await response.clone().json();
       const spec=JSON.parse(options.body);
-      evidence.inference.push({status:response.status,usage:body.usage,systemCharacters:spec.messages[0].content.length});
+      evidence.inference.push({status:response.status,usage:body.usage,systemCharacters:spec.messages[0].content.length,modelOutput:body.choices?.[0]?.message?.content});
     }
     return response;
   };
@@ -82,9 +83,11 @@ try {
   const swatch=await fs.readFile('docs/verification/v2/local-ai/材料色样.png');
   const prompt='请根据参考图片的主色，把书房的原木茶几改成该颜色，仅改这张茶几。请生成可预览的改色命令。';
   const image='data:image/png;base64,'+swatch.toString('base64');
-  let tint=await ask(prompt,image);
+  const rgb=await sharp(swatch).removeAlpha().resize(1,1).raw().toBuffer();
+  const palette='\n图片中按像素占比从高到低的参考色为 #'+rgb.toString('hex')+'。如要求修改家具颜色，请根据画面选择与要求匹配的真实色值，用 set_material 的 color 字段生成方案；仅用户要求更换材料时才用 materialId。界面会让用户确认方案。';
+  let tint=await ask(prompt+palette,image);
   if(!tint.commands.length && tint.questions.length) {
-    tint=await ask('先前要求：'+prompt+'\n助手对该要求的提问：'+tint.questions.join('；')+'\n用户的新回复：确认使用你识别出的颜色，请生成改色命令供我预览。',image);
+    tint=await ask('先前要求：'+prompt+'\n助手对该要求的提问：'+tint.questions.join('；')+'\n用户的新回复：确认使用你识别出的颜色，请生成改色命令供我预览。'+palette,image);
   }
   assert.equal(tint.commands.length,1,JSON.stringify(tint));
   const cmd=tint.commands[0];assert.equal(cmd.type,'set_material');assert.equal(cmd.targetId,placements[118].id);

@@ -143,6 +143,15 @@ test('a short confirmation retains a previously named remote room',async()=>{
   assert.equal(sent.selectedFurniture,undefined);
 });
 
+test('explicit room names use the longest match and instance IDs match as complete tokens',async()=>{
+  const scene=crowdedScene();
+  scene.buildings[0].floors[0].rooms[0].name='次卧';
+  scene.buildings[0].floors[0].rooms[1].name='次卧二';
+  const {sent}=await crowdedReply('只移动次卧二的 instance-118',{scene});
+  assert.deepEqual(sent.rooms.map(r=>r.id),['room-study']);
+  assert.deepEqual(sent.placements.map(p=>p.id),['instance-118']);
+});
+
 test('a real but omitted item or shared asset cannot be substituted for selected furniture',async()=>{
   for(const targetId of ['instance-118','instance-0','mug']){
     const {result}=await crowdedReply('仅将选中的家具改成蓝色',{plan:{...movePlan(),commands:[{type:'set_material',targetId,color:'#174a9f'}]}});
@@ -158,4 +167,12 @@ test('a regular 34-piece text request keeps its full original scene',async()=>{
   assert.equal(sent.placements.length,34);
   assert.equal(sent.scope,undefined);
   assert.deepEqual(result.warnings,[]);
+});
+
+test('a provider context overflow from a large visual attachment asks for a smaller scope without retrying',async()=>{
+  let calls=0;
+  const result=await generateSceneCommand({sceneDocument:crowdedScene(),message:'把选中的家具改成图片主色',image:'data:image/png;base64,AAAA',selection:{roomId:'room-memory',placementId:'instance-119'},
+    env:{LLM_API_KEY:'test',LLM_BASE_URL:'https://example.invalid',LLM_MODEL:'test'},
+    fetchImpl:async()=>{calls++;return {ok:false,status:400,json:async()=>({error:{type:'exceed_context_size_error',message:'input exceeds the available context size'}})};}});
+  assert.equal(calls,1);assert.deepEqual(result.commands,[]);assert.match(result.questions[0],/裁/);
 });

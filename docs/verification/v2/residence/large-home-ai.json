@@ -1,0 +1,103 @@
+{
+  "date": "2026-11-19T10:58:17.531Z",
+  "model": "dreamhome-qwen3-vl",
+  "fixture": "四个房间共120个家具实例，分用三个实存 GLB，最后两项为跨房间目标与已选目标。",
+  "cases": [
+    {
+      "message": "只把选中的奶油色双人沙发向右移动20厘米，保持前后位置和高度。",
+      "image": false,
+      "status": 200,
+      "realModelCalls": 1,
+      "plan": {
+        "summary": "将选中的奶油色双人沙发向右移动20厘米，保持前后位置和高度。",
+        "commands": [
+          {
+            "type": "move_asset",
+            "placementId": "home-placement-119",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 14.8
+            }
+          }
+        ],
+        "questions": [],
+        "warnings": [
+          "此次只提供 1/4 个房间和 14/120 件家具，未列入的对象不参与修改。"
+        ],
+        "requiresConfirmation": true
+      }
+    },
+    {
+      "message": "请根据参考图片的主色，把书房的原木茶几改成该颜色，仅改这张茶几。请生成可预览的改色命令。\n图片中按像素占比从高到低的参考色为 #174a9f。如要求修改家具颜色，请根据画面选择与要求匹配的真实色值，用 set_material 的 color 字段生成方案；仅用户要求更换材料时才用 materialId。界面会让用户确认方案。",
+      "image": true,
+      "status": 200,
+      "realModelCalls": 1,
+      "plan": {
+        "summary": "根据图片主色 #174a9f，将书房原木茶几改色为该蓝色。",
+        "commands": [
+          {
+            "type": "set_material",
+            "targetId": "home-placement-118",
+            "color": "#174a9f"
+          }
+        ],
+        "questions": [],
+        "warnings": [
+          "此次只提供 1/4 个房间和 1/120 件家具，未列入的对象不参与修改。"
+        ],
+        "requiresConfirmation": true
+      }
+    },
+    {
+      "message": "将全屋所有家具统一改为蓝色。",
+      "image": false,
+      "status": 200,
+      "realModelCalls": 0,
+      "plan": {
+        "summary": "请先确定此次修改的范围。",
+        "commands": [],
+        "questions": [
+          "这次要先处理哪个房间、哪件家具？可以先点选家具，再告诉我修改内容。"
+        ],
+        "warnings": [
+          "完整住宅有 4 个房间、120 件家具，当前上下文无法逐件核对该批量操作。"
+        ],
+        "requiresConfirmation": true
+      }
+    }
+  ],
+  "inference": [
+    {
+      "status": 200,
+      "usage": {
+        "completion_tokens": 108,
+        "prompt_tokens": 2217,
+        "total_tokens": 2325,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "systemCharacters": 4428,
+      "modelOutput": "{\n  \"summary\": \"将选中的奶油色双人沙发向右移动20厘米，保持前后位置和高度。\",\n  \"commands\": [\n    {\n      \"type\": \"move_asset\",\n      \"placementId\": \"home-placement-119\",\n      \"offset\": {\n        \"x\": 0.2,\n        \"y\": 0,\n        \"z\": 0\n      }\n    }\n  ],\n  \"questions\": [],\n  \"warnings\": [],\n  \"requiresConfirmation\": true\n}"
+    },
+    {
+      "status": 200,
+      "usage": {
+        "completion_tokens": 93,
+        "prompt_tokens": 1063,
+        "total_tokens": 1156,
+        "prompt_tokens_details": {
+          "cached_tokens": 302
+        }
+      },
+      "systemCharacters": 2158,
+      "modelOutput": "{\n  \"summary\": \"根据图片主色 #174a9f，将书房原木茶几改色为该蓝色。\",\n  \"commands\": [\n    {\n      \"type\": \"set_material\",\n      \"targetId\": \"home-placement-118\",\n      \"color\": \"#174a9f\"\n    }\n  ],\n  \"questions\": [],\n  \"warnings\": [],\n  \"requiresConfirmation\": true\n}"
+    }
+  ],
+  "applicationPort": 60688,
+  "inferencePort": 51906,
+  "contextWindow": 8192,
+  "gpuLayers": 0,
+  "passed": true
+}

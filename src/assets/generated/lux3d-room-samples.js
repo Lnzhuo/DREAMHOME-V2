@@ -1,4 +1,5 @@
 import { ROOM_TEMPLATES, createSingleRoomDocument } from '../../data/v2-contracts.js';
+import { requiresReview } from '../catalog-filters.js';
 
 // Positions are in metres in the room's Y-up coordinate system.
 // Each sample includes verified Lux3D pieces and, when useful, a CC0 accent.
@@ -47,7 +48,7 @@ export function createLux3dRoomSample(sampleId, catalogAssets) {
   for (const [index, item] of sample.items.entries()) {
     const asset = catalogAssets.find(entry => item.assetId ? entry.id === item.assetId : String(entry.providerTaskId) === item.taskId);
     const key = item.assetId || item.taskId;
-    if (!asset || !asset.thumbnailUrl || !asset.qa?.placementTest?.startsWith('通过') || asset.scaleCalibrationRequired || !asset.qa?.visualReview || /待|需复核|需单独校准|瑕疵|异常|差异|不可拆|不可分|不能独立|额外支架|疑似重复|细节较浅|未目检|未人工|未审核|未复核|未验收/.test(asset.qa.visualReview)) { missing.push(key); continue; }
+    if (!asset || !asset.thumbnailUrl || !asset.qa?.placementTest?.startsWith('通过') || requiresReview(asset)) { missing.push(key); continue; }
     if (!doc.assets.some(entry => entry.id === asset.id)) doc.assets.push(structuredClone(asset));
     doc.placements.push({ id: `sample-placement-${key}-${index}`, assetId: asset.id, containerId: room.id,
       position: { x:item.position[0], y:item.position[1], z:item.position[2] }, rotation:{x:0,y:item.rotationY||0,z:0}, scale:{x:1,y:1,z:1}, locked:false, visible:true });
