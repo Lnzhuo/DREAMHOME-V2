@@ -1,6 +1,6 @@
 # DREAMHOME V2
 
-当前版本 **v2.1.0**。历次上线内容见 [GitHub Releases](https://github.com/Lnzhuo/DREAMHOME-V2/releases)。
+当前版本 **v2.1.1**。历次上线内容见 [GitHub Releases](https://github.com/Lnzhuo/DREAMHOME-V2/releases)。
 
 DREAMHOME 是一个可编辑的 3D 家居设计工作室。可以从单个房间或整套户型开始，布置家具、调整门窗和材料，在平面、三维和漫游视图之间切换。项目支持导入 GLB，并可配置个人 Aholo/Lux3D 与兼容的 LLM 服务。
 

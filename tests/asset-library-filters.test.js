@@ -14,3 +14,10 @@ test('缺少 QA 的外部库资产不冒充已验收',()=>{assert(requiresReview
 test('场景通过但未完成目检的模型不进入推荐',()=>{assert(requiresReview({provider:'aholo-lux3d',qa:{placementTest:'通过：回归'}}));assert(requiresReview({provider:'aholo-lux3d',qa:{placementTest:'通过：回归',visualReview:'未目检'}}));});
 test('人工目检通过进入推荐，含缺陷及未经目检的临时通过仍待审',()=>{assert(!requiresReview({...ok,qa:{...ok.qa,visualReview:'已人工目检：餐椅外形、材质和方向正常'}}));assert(requiresReview({...ok,qa:{...ok.qa,visualReview:'已人工目检：侧面存在额外支架'}}));assert(requiresReview({...ok,qa:{...ok.qa,visualReview:'临时通过'}}));});
 test('样板与目录共用目检判定',()=>{const asset={...ok,providerTaskId:'8394445',thumbnailUrl:'/thumbnail.png',qa:{...ok.qa,visualReview:'已人工目检：餐椅外形、材质和方向正常'}};assert(createLux3dRoomSample('lux-living',[asset]).document.placements.some(p=>p.assetId===asset.id));const flawed={...asset,qa:{...asset.qa,visualReview:'已人工目检：侧面存在额外支架'}};assert(!createLux3dRoomSample('lux-living',[flawed]).document.placements.some(p=>p.assetId===asset.id));});
+
+test('实拍参考家具通过对照目检后可用于预设，带缺陷或未通过摆放测试时仍需复核', () => {
+  const checked = { visualReview: '已对照目检：白瓷花瓶轮廓与参考接近', placementTest: '通过：真实载入、拾取、变换、保存重开' };
+  assert.equal(requiresReview({ ...ok, qa: checked }), false);
+  assert.equal(requiresReview({ ...ok, qa: { ...checked, visualReview: '已对照目检：轮廓差异' } }), true);
+  assert.equal(requiresReview({ ...ok, qa: { ...checked, placementTest: '未测试' } }), true);
+});
