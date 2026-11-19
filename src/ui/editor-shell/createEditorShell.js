@@ -55,7 +55,8 @@ export function createEditorShell({ projectName = '未命名客厅' } = {}) {
       </section>
       <aside class="dh-right" aria-label="AI 设计助手">
         <section class="dh-panel" data-manual-controls hidden><div class="dh-panel-title">家具属性</div><div class="dh-property-panel"><div class="dh-empty">选择一件家具开始编辑</div></div></section>
-        <details class="dh-panel dh-room-section" data-manual-controls open hidden><summary class="dh-panel-title">房间参数</summary><label class="dh-style-select">墙地配色 <select data-action="style"><option value="">选择风格</option></select></label><div class="dh-room-panel"></div></details><section class="dh-panel dh-ai-section"><div class="dh-panel-title">AI 设计助手</div><div class="dh-ai-panel"></div></section>
+        <details class="dh-panel dh-room-section" data-manual-controls open hidden><summary class="dh-panel-title">房间参数</summary><label class="dh-style-select">墙地配色 <select data-action="style"><option value="">选择风格</option></select></label><div class="dh-room-panel"></div></details>
+        <section class="dh-panel dh-ai-section"><div class="dh-ai-panel"></div></section>
       </aside>
     </main>`;
 

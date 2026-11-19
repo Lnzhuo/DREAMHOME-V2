@@ -236,8 +236,12 @@ export async function handleAiRequest(request, response) {
       return true;
     }
     if (input.image && (typeof input.image !== 'string' || !/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(input.image))) { const error = new Error('图片格式无效'); error.status = 400; throw error; }
+    const env = await getProviderEnvironment(sessionId, 'llm');
+    if (input.serviceSource && input.serviceSource !== env.LLM_SOURCE) {
+      throw Object.assign(new Error('API 服务已切换或会话已到期，请确认当前服务后重新发送。'), { status: 409 });
+    }
     const catalog = JSON.parse(await fs.readFile(path.resolve('data/library/index.json'), 'utf8'));
-    const plan = await generateSceneCommand({ message: input.message, image: input.image, sceneDocument: input.sceneDocument, selection: { roomId:input.selection?.roomId, placementId:input.selection?.placementId }, catalog, env: await getProviderEnvironment(sessionId, 'llm') });
+    const plan = await generateSceneCommand({ message: input.message, image: input.image, sceneDocument: input.sceneDocument, selection: { roomId:input.selection?.roomId, placementId:input.selection?.placementId }, catalog, env });
     response.writeHead(200, { 'Content-Type': 'application/json' });
     response.end(JSON.stringify(plan));
   } catch (error) {

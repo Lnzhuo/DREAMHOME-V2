@@ -13,7 +13,7 @@ function preview(document) {
   return `<svg viewBox="${minX-.5} ${minY-.5} ${maxX-minX+1} ${maxY-minY+1}" role="img" aria-label="模板轮廓预览">${polygons}</svg>`;
 }
 function prepare(doc) { doc.assets=EXISTING_LUX3D_ASSETS.map(a=>structuredClone(a));return doc; }
-export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRecent,catalogAssets=[]}={}) {
+export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRecent,onOpenApi,catalogAssets=[]}={}) {
   return new Promise((resolve) => {
     const overlay=document.createElement('div');overlay.className='dh-onboarding';
     overlay.innerHTML=`
@@ -75,7 +75,7 @@ export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRec
       if (canCancel) previousFocus?.focus({ preventScroll: true });
       resolve(value);
     };
-    mountRoomDesigner(overlay.querySelector('[data-room-designer]'),catalogAssets,close);
+    mountRoomDesigner(overlay.querySelector('[data-room-designer]'),catalogAssets,close,onOpenApi);
     const cancel = overlay.querySelector('.dw-cancel');
     if (cancel) {
       cancel.addEventListener('click', () => close(null));

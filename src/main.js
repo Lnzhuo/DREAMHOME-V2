@@ -1,5 +1,7 @@
 import './styles.css';
 import './styles/editor-shell.css';
+import './ai/assistant-panel.css';
+import './ui/settings/api-settings.css';
 import { createProjectWizard } from './ui/onboarding/createProjectWizard.js';
 import { validateSceneDocument } from './data/scene-document.js';
 import { Game } from './game/Game.js';
@@ -18,6 +20,8 @@ import { RoomEditor } from './ui/rooms/RoomEditor.js';
 import { BUILT_IN_MATERIALS } from './data/v2-contracts.js';
 
 async function boot() {
+  const settings = new ApiSettings();
+  const openAiSettings = () => settings.open('llm');
   const loading = document.createElement('div');
   loading.className = 'loading';
   loading.textContent = '正在打开 DREAMHOME…';
@@ -44,7 +48,7 @@ async function boot() {
   if (!sceneDocument) {
     loading.hidden = true;
     let reopened = false;
-    const selected = await createProjectWizard({ catalogAssets: libraryIndex.assets, recentProjects: savedProjects, onOpenRecent: async id => {
+    const selected = await createProjectWizard({ catalogAssets: libraryIndex.assets, recentProjects: savedProjects, onOpenApi: openAiSettings, onOpenRecent: async id => {
       const doc = editableDocument(await projectRepository.loadProject(id));
       reopened = true;
       return doc;
@@ -87,8 +91,7 @@ async function boot() {
   const editor = new EditorBridge(game, {
     onStatus: (message, type) => shell.setUploadState(type, message),
   }).mount({ propertyPanel: shell.propertyPanel, toolbar: shell.toolbar });
-  const settings = new ApiSettings();
-  shell.settingsButton.addEventListener('click', () => settings.open().catch((e) => shell.setUploadState('error', e.message)));
+  shell.settingsButton.addEventListener('click', openAiSettings);
   const roomEditor = new RoomEditor({ root: shell.roomPanel, editor }).mount();
   const styleSelect = shell.root.querySelector('[data-action="style"]');
   for (const style of Object.keys(INTERIOR_STYLES)) styleSelect.add(new Option(style, style));
@@ -160,8 +163,13 @@ async function boot() {
   const aiPanel = new AIAssistantPanel({
     root: shell.aiPanel,
     executor,
-    onStatus: (message, type) => shell.setUploadState(type, message),
+    onOpenApi: openAiSettings,
+    onSourceMismatch: () => settings.refresh().catch(showAiSource),
   }).mount();
+  const showAiSource = () => aiPanel.setService(settings.status?.llm);
+  settings.addEventListener('change', showAiSource);
+  if (settings.status) showAiSource();
+  settings.refresh().catch(showAiSource);
 
   const assetLibrary = new AssetLibrary({
     root: shell.assetLibrary,
@@ -297,6 +305,7 @@ async function boot() {
   async function openProject(projectId) {
     await saveChain;
     const next = prepareDocument(editableDocument(await projectRepository.loadProject(projectId)));
+    if (next.projectId !== game.sceneDocument.projectId) aiPanel.reset();
     shell.setProjectName(next.name);
     editor.replaceSceneDocument(next);
     setViewMode('3d');
@@ -310,7 +319,7 @@ async function boot() {
 
   async function createProject() {
     let recentId;
-    const selected = await createProjectWizard({ canCancel: true, catalogAssets: libraryIndex.assets, recentProjects: await projectRepository.listProjects(), onOpenRecent: (id) => { recentId = id; return openProject(id); } });
+    const selected = await createProjectWizard({ canCancel: true, catalogAssets: libraryIndex.assets, recentProjects: await projectRepository.listProjects(), onOpenApi: openAiSettings, onOpenRecent: (id) => { recentId = id; return openProject(id); } });
     if (recentId || !selected) return;
     const next = await projectRepository.createProject({ name: selected.name, sceneDocument: applyTemplateFinishes(selected) });
     await openProject(next.projectId);

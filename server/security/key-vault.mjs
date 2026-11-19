@@ -69,8 +69,18 @@ export async function testAholo(id) {
 }
 export async function testLlm(id) {
   const env = await getProviderEnvironment(id, 'llm');
-  if (!env.LLM_API_KEY || !env.LLM_BASE_URL || !env.LLM_MODEL) throw new Error('LLM 未配置');
+  if (!env.LLM_API_KEY || !env.LLM_BASE_URL || !env.LLM_MODEL) {
+    throw Object.assign(new Error('当前服务尚未配置，请填写并保存个人 API。'), { status: 400 });
+  }
   const response = await (env.LLM_SOURCE === 'byok' ? safeByokFetch : fetch)(`${env.LLM_BASE_URL.replace(/\/$/, '')}/models`, { headers: { Authorization: `Bearer ${env.LLM_API_KEY}` }, redirect: 'error', signal: AbortSignal.timeout(20000) });
-  if (!response.ok) throw new Error(`LLM /models 返回 HTTP ${response.status}`);
+  if (!response.ok) {
+    const detail = {
+      401: 'API Key 未通过服务商鉴权，请检查后重新保存。',
+      403: '服务商拒绝访问模型列表，请检查密钥权限。',
+      404: '未找到模型列表，请核对 Base URL。',
+      429: '服务商限制了请求频率或额度，请稍后再试。',
+    }[response.status] || `模型列表测试失败（HTTP ${response.status}）。`;
+    throw Object.assign(new Error(detail), { status: 422 });
+  }
   return { authenticated: true, model: env.LLM_MODEL };
 }

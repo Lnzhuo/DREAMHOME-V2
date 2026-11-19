@@ -89,7 +89,11 @@ export class SceneCommandExecutor {
   describe(command, placement, sceneDocument) {
     const assetName = (id) => [...sceneDocument.assets, ...(this.catalog?.assets || [])].find((entry) => entry.id === id)?.name || id;
     if (command.type === 'place_asset') return `添加「${assetName(command.assetId)}」`;
-    if (command.type === 'move_asset') return `移动「${assetName(placement?.assetId)}」到 (${command.position.x}, ${command.position.y}, ${command.position.z})m`;
+    if (command.type === 'move_asset') {
+      const { x, y, z } = command.position;
+      const coordinates = [x, y, z].map(value => Number(value.toFixed(3))).join(', ');
+      return `移动「${assetName(placement?.assetId)}」至 (${coordinates}) 米`;
+    }
     if (command.type === 'rotate_asset') return `旋转「${assetName(placement?.assetId)}」到 (${command.rotation.x}, ${command.rotation.y}, ${command.rotation.z})rad`;
     if (command.type === 'replace_asset') return `将「${assetName(placement?.assetId)}」替换为「${assetName(command.newAssetId)}」`;
     if (command.type === 'set_material') return `将「${assetName(command.targetId)}」${command.surface || ''}设为 ${command.materialId || command.color}`;

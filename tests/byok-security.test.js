@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { Readable } from 'node:stream';
+import { handleAiRequest } from '../server/ai/handler.js';
 import { getSessionId, saveSecrets, getSecrets, getPublicStatus, setSource, getProviderEnvironment, deleteSecrets } from '../server/security/key-vault.mjs';
 function open(cookie = '') { let header; const id = getSessionId({ headers: { cookie } }, { setHeader: (_, value) => { header = value; } }); return { id, cookie: header?.split(';')[0] }; }
 test('session vault isolates keys, supports explicit source selection and deletion', async () => {
@@ -22,6 +24,21 @@ test('personal LLM endpoints reject local and private addresses', async () => {
   for (const url of ['http://127.0.0.1:1234/v1','https://localhost/v1','https://127.0.0.1/v1','https://10.1.2.3/v1','https://[::1]/v1']) assert.throws(() => assertByokUrl(url));
   assert.doesNotThrow(() => assertByokUrl('https://provider.example/v1'));
   await assert.rejects(() => safeByokFetch('https://192.168.1.1/v1'));
+});
+
+test('scene commands stop when the session has switched away from the displayed API source', async () => {
+  const request = Readable.from([Buffer.from(JSON.stringify({
+    message: '调整墙面颜色', sceneDocument: {}, serviceSource: 'byok',
+  }))]);
+  Object.assign(request, { method: 'POST', url: '/api/ai/scene-command', headers: { host: 'localhost' } });
+  let status, body;
+  await handleAiRequest(request, {
+    setHeader() {},
+    writeHead(code) { status = code; },
+    end(content) { body = JSON.parse(content); },
+  });
+  assert.equal(status, 409);
+  assert.match(body.error, /API 服务已切换或会话已到期/);
 });
 
 test('personal LLM DNS cannot resolve to private network', async () => {

@@ -1,7 +1,7 @@
 {
   "name": "dreamhome-studio",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.1.3",
   "type": "module",
   "description": "DREAMHOME · 可编辑的住宅、家具与材料设计工作室",
   "scripts": {

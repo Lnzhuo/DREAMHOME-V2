@@ -1,16 +1,20 @@
 import { createDesignedRoom } from '../../data/designed-room.js';
 import { PALETTES, SPACES } from '../../data/room-brief.js';
 
-export function mountRoomDesigner(root, assets, open) {
+export function mountRoomDesigner(root, assets, open, onOpenApi) {
   root.innerHTML=`
     <form class="dw-brief-form">
       <label for="dw-brief">描述你的房间</label>
       <textarea id="dw-brief" required maxlength="1200" rows="3" placeholder="想要一个能在窗边看书的客厅，墙刷成鼠尾草绿，再留一角放植物。"></textarea>
       <div class="dw-examples" role="group" aria-label="填入示例需求"><button type="button">窗边阅读</button><button type="button">暖陶卧室</button><button type="button">胡桃木餐厅</button></div>
-      <button class="dw-generate" type="submit">生成整套搭配</button>
+      <div class="dw-brief-actions">
+        <button class="dw-generate" type="submit">生成整套搭配</button>
+        ${onOpenApi ? '<button class="dh-chat-link" type="button" data-design-settings>API 设置</button>' : ''}
+      </div>
     </form>
     <div class="dw-brief-result" aria-live="polite"></div>`;
   const form=root.querySelector('form'), field=form.querySelector('textarea');
+  form.querySelector('[data-design-settings]')?.addEventListener('click', () => onOpenApi());
   const submit=form.querySelector('[type="submit"]'), result=root.querySelector('.dw-brief-result');
   const examples=['想要一个鼠尾草绿的客厅，窗边可以看书，有绿植和地毯。','想要一间暖陶色的双人卧室，有收纳，床边留一把阅读椅。','四个人平时一起吃饭，想要中古胡桃木餐厅，配一盏温暖的灯。'];
   let revision=0;

@@ -1,0 +1,99 @@
+.dh-api-dialog {
+  width: min(548px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 1px solid var(--studio-line);
+  border-radius: 14px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--studio-surface);
+  color: var(--studio-ink);
+}
+.dh-api-dialog::backdrop { background: rgb(23 34 27 / 60%); }
+
+.dh-api-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-surface);
+}
+.dh-api-header h2 { font-size: 21px; margin: 0; }
+.dh-api-content { padding: 16px 20px 18px; }
+
+.dh-api-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+.dh-api-tabs button {
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--studio-line);
+  border-radius: 7px;
+  color: var(--studio-forest);
+  background: var(--studio-surface);
+  font-size: 13px;
+}
+.dh-api-tabs button[aria-pressed="true"] {
+  border-color: var(--studio-forest);
+  background: var(--studio-forest);
+  color: white;
+  font-weight: 650;
+}
+
+.dh-api-content fieldset { min-width: 0; padding: 0; margin: 0; border: 0; }
+.dh-api-source { padding: 10px 12px; border-radius: 9px; background: var(--studio-tint); }
+.dh-api-source label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 12px;
+  flex-wrap: wrap;
+}
+.dh-api-dialog label { font-size: 13px; font-weight: 650; }
+.dh-api-dialog input, .dh-api-dialog select {
+  min-height: 37px;
+  border: 1px solid #a9afa2;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: var(--studio-surface);
+  color: var(--studio-ink);
+  font: inherit;
+  font-weight: 400;
+}
+.dh-api-dialog input::placeholder { opacity: 1; color: var(--studio-muted); }
+.dh-api-dialog input:disabled, .dh-api-dialog select:disabled { opacity: .68; }
+
+.dh-api-source p, .dh-api-fields p, .dh-api-footnote {
+  margin: 5px 0 0;
+  color: var(--studio-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+.dh-api-fields { display: grid; gap: 9px; margin-top: 16px; }
+.dh-api-fields h3 { margin: 0; font-size: 16px; }
+.dh-api-fields p { margin: -3px 0 1px; }
+.dh-api-fields label { display: grid; gap: 4px; }
+.dh-api-fields :is(input, select) { width: 100%; min-width: 0; }
+.dh-api-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 13px; }
+.dh-api-actions button { min-height: 36px; }
+
+.dh-api-note { margin: 0; color: var(--studio-muted); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.dh-api-note:not(:empty) { margin-top: 10px; }
+.dh-api-note[data-state="error"] { color: #8b3726; }
+.dh-api-note[data-state="success"] { color: var(--studio-forest); }
+.dh-api-footnote { margin-top: 12px; }
+
+@media (max-width: 520px) {
+  .dh-api-header { padding-inline: 12px; }
+  .dh-api-content { padding: 12px; }
+  .dh-api-dialog input, .dh-api-dialog select { font-size: 16px; }
+}

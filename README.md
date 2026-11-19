@@ -1,6 +1,6 @@
 # DREAMHOME V2
 
-当前版本 **v2.1.2**。历次上线内容见 [GitHub Releases](https://github.com/Lnzhuo/DREAMHOME-V2/releases)。
+当前版本 **v2.1.3**。历次上线内容见 [GitHub Releases](https://github.com/Lnzhuo/DREAMHOME-V2/releases)。
 
 DREAMHOME 是一个可编辑的 3D 家居设计工作室。可以从单个房间或整套户型开始，布置家具、调整门窗和材料，在平面、三维和漫游视图之间切换。项目支持导入 GLB，并可配置个人 Aholo/Lux3D 与兼容的 LLM 服务。
 
@@ -9,6 +9,8 @@ DREAMHOME 是一个可编辑的 3D 家居设计工作室。可以从单个房间
 首页的“精选风格搭配”提供林间中古客厅、暖陶假日卧室、胡桃晚餐餐厅和浅木书斋四套可编辑设计。点击封面会新建独立项目。已经打开项目时，点击左上角 DREAMHOME 可返回选择页。
 
 在新建设计页描述客厅、卧室、书房或餐厅的用途、尺寸与偏好，点击“生成整套搭配”。配置好的 LLM 或 Windows 本地模型会补全设计参数，工作室再从模型库中摆放实际家具。打开方案后可以选中单件修改，也可以在 AI 助手中另建一套。没有连接模型时界面会标明使用本地规则。
+
+首页和 AI 设计助手都提供“API 设置”。在“AI 设计助手”页签填写 OpenAI 兼容服务的 Base URL、模型名称和 API Key，点击“保存并使用”。设计对话和整套搭配会使用所选服务。可以测试当前连接，或随时切回平台模型。
 
 在本机编辑器中选择“室内取景”，调整角度后点击“渲染效果图”，可将当前模型与材质交给 Blender Cycles 输出 1280 × 800 的 JPG。Windows 自动查找 Blender 安装目录，也可通过 `BLENDER_BIN` 指定可执行文件。示例使用 Blender 5.2。生成搭配需要配套的 `data/library`，使用本地 Qwen 还需要配套的 `data/local-ai`。
 
