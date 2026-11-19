@@ -44,10 +44,12 @@ export class AIAssistantPanel {
   mount() {
     this.root.innerHTML = `
       <div class="dh-ai-messages"><div class="dh-ai-message">描述想调整的家具、位置或墙地材料，也可以附一张参考图。查看方案后再应用。</div></div>
+      <button class="dh-button dh-secondary" data-action="whole-design" type="button">按描述新建整套搭配</button>
       <form class="dh-ai-form"><div class="dh-ai-input-row"><input class="dh-input" placeholder="例如：把茶几向右移 20 厘米" aria-label="设计指令"/><button class="dh-button dh-primary" type="submit">发送</button></div></form>
       <label>参考图片（可选） <input type="file" data-ai-image accept="image/png,image/jpeg,image/webp" /></label>
       <div class="dh-ai-preview" hidden></div>
       <div class="dh-row"><button class="dh-button dh-secondary" data-action="undo" type="button">撤销上次修改</button></div>`;
+    this.root.querySelector('[data-action="whole-design"]')?.addEventListener('click',()=>this.onCreateDesign?.());
     this.root.querySelector('form').addEventListener('submit', (event) => {
       event.preventDefault();
       const input = this.root.querySelector('input');

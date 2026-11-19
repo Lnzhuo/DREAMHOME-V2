@@ -25,7 +25,7 @@ const capturePage=file=>process.env.DEMO_CHECK_STATE_ONLY==='1' ? Promise.resolv
 page.on('pageerror',e=>evidence.pageErrors.push(e.message));
 try {
   await page.goto(base);
-  await page.getByRole('button',{name:'打开已布置样板间'}).click();
+  await page.locator('[data-preset="sage"]').click();
   await page.waitForFunction(()=>window.__dreamhome?.sceneDocument.placements.length>0);
   await page.waitForFunction(()=>Object.values(window.__dreamhome.game.placementGroups).every(g=>g.userData.hasRealModel));
   const data=await page.evaluate(()=>{

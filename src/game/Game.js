@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { walkStep, walkSiteStep } from '../scene/walk.js';
 import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createBuilding } from '../scene/createBuilding.js';
 import { getPBRMaterial } from '../scene/materials.js';
@@ -60,7 +64,7 @@ export class Game {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(width, height);
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.14;
     this.renderer.domElement.style.cursor = 'grab';
@@ -93,7 +97,7 @@ export class Game {
     this.sceneDocument.placements.forEach((placement) => this.addPlacementRuntime(placement));
     this.syncObjectViews();
     this.bindEvents();
-    this.resetView(true);
+    this.openingView();
     this.renderer.setAnimationLoop(() => this.update());
   }
 
@@ -432,6 +436,7 @@ export class Game {
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(width, height);
+      this.interiorComposer?.setSize(width,height);
       this.needsFrame = true;
     };
     new ResizeObserver(() => { if (this.container.clientWidth) resize(); }).observe(this.container);
@@ -500,7 +505,28 @@ export class Game {
     this.startTween(cameraPos, target, 780);
   }
 
+  openingView() {
+    const context=findRoomContext(this.sceneDocument,this.activeRoomId);
+    if (context?.room.designPalette) this.interiorView();
+    else this.resetView(true);
+  }
+
+  interiorView() {
+    const context=findRoomContext(this.sceneDocument,this.activeRoomId);
+    if (!context) return this.resetView(true);
+    this.interiorFraming=true;
+    const b=getRoomBounds(context.room), origin=this.originOf(context.room.id);
+    const target=new THREE.Vector3(b.minX+b.width*.45,1.03,b.minY+b.depth*.24).add(origin);
+    const distance=Math.max(b.depth*.98,b.width*.94/Math.max(.65,this.camera.aspect));
+    this.camera.position.copy(target).add(new THREE.Vector3(distance*.21,.38,distance));
+    this.controls.target.copy(target);
+    this.tween=null;
+    this.controls.update();
+    this.needsFrame=true;
+  }
+
   resetView(immediate = false) {
+    this.interiorFraming=false;
     const points = this.sceneDocument.buildings.flatMap((b) => b.floors.flatMap((f) => f.rooms.flatMap((r) => r.boundary)));
     if (this.showAllLevels) points.push(...this.sceneDocument.outdoorZones.flatMap(z=>z.boundary));
     if (!points.length) return;
@@ -568,9 +594,14 @@ export class Game {
     const dx = this.camera.position.x - x, dz = this.camera.position.z - z;
     for (const group of this.wallGroups) {
       const n = group.userData.outward;
+      if(this.interiorFraming && this.sceneDocument.projectType==='room' && !this.walking && this.camera.position.y < 2.85) {
+        const origin=this.originOf(this.activeRoomId), mid=group.userData.midpoint;
+        group.visible=!this.cutaway || n.x*(this.camera.position.x-origin.x-mid.x)+n.z*(this.camera.position.z-origin.z-mid.z)<.025;
+        continue;
+      }
       group.visible = group.userData.partition || this.walking || !this.cutaway || n.x * dx + n.z * dz <= 0.025;
     }
-    for (const ceiling of this.ceilings) ceiling.visible = this.walking;
+    for (const ceiling of this.ceilings) ceiling.visible = this.walking || (this.interiorFraming && this.sceneDocument.projectType==='room' && this.camera.position.y < ceiling.getWorldPosition(this.ceilingPoint ??= new THREE.Vector3()).y-.04);
     for (const roof of this.exteriorRoofs) roof.visible = !this.walking && !this.cutaway && this.showAllLevels;
   }
 
@@ -677,6 +708,20 @@ export class Game {
     this.lastRender = now;
     this.updateCutaway();
     this.onUpdate?.(this);
-    this.renderer.render(this.scene, this.camera);
+    if(this.interiorFraming && !this.walking && this.renderer.extensions.has('EXT_color_buffer_float')) {
+      if(!this.interiorComposer) {
+        const size=this.renderer.getSize(new THREE.Vector2());
+        const composer=new EffectComposer(this.renderer);
+        composer.setPixelRatio(Math.min(1.25,this.renderer.getPixelRatio()));
+        composer.addPass(new RenderPass(this.scene,this.camera));
+        const ao=new GTAOPass(this.scene,this.camera,size.x,size.y);
+        ao.updateGtaoMaterial({radius:.32,thickness:.55,distanceExponent:1.3,samples:12});
+        ao.blendIntensity=.9;
+        composer.addPass(ao);
+        composer.addPass(new OutputPass());
+        this.interiorComposer=composer;
+      }
+      this.interiorComposer.render();
+    } else this.renderer.render(this.scene,this.camera);
   }
 }

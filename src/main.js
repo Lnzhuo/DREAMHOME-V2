@@ -12,7 +12,7 @@ import { FloorplanView } from './ui/floorplan/FloorplanView.js';
 import { MaterialLibrary } from './ui/materials/MaterialLibrary.js';
 import { attachReferencePlan } from './ui/floorplan/ReferencePlan.js';
 import { downloadDesign, readDesign } from './storage/DesignFiles.js';
-import { createShowcase, INTERIOR_STYLES, applyInteriorStyle } from './data/interior-styles.js';
+import { INTERIOR_STYLES, applyInteriorStyle } from './data/interior-styles.js';
 import { ApiSettings } from './ui/settings/ApiSettings.js';
 import { RoomEditor } from './ui/rooms/RoomEditor.js';
 import { BUILT_IN_MATERIALS } from './data/v2-contracts.js';
@@ -28,7 +28,6 @@ async function boot() {
 
   const savedProjects = await projectRepository.listProjects();
   const libraryIndex = await (await fetch('/api/library/index.json')).json();
-  const onShowcase = () => createShowcase(libraryIndex);
   let sceneDocument;
   function editableDocument(doc) {
     if (!doc?.buildings?.some(b => b.floors?.some(f => f.rooms?.length)) || !validateSceneDocument(doc).valid) {
@@ -36,18 +35,21 @@ async function boot() {
     }
     return doc;
   }
-  if (savedProjects.length) {
+  const entryUrl=new URL(location.href);
+  const browseStyles=entryUrl.searchParams.get('home')==='styles';
+  if (savedProjects.length && !browseStyles) {
     try { sceneDocument = editableDocument(await projectRepository.loadProject(savedProjects[0].projectId)); }
     catch { /* Preserve the damaged record and show the project chooser. */ }
   }
   if (!sceneDocument) {
     loading.hidden = true;
     let reopened = false;
-    const selected = await createProjectWizard({ onShowcase, catalogAssets: libraryIndex.assets, recentProjects: savedProjects, onOpenRecent: async id => {
+    const selected = await createProjectWizard({ catalogAssets: libraryIndex.assets, recentProjects: savedProjects, onOpenRecent: async id => {
       const doc = editableDocument(await projectRepository.loadProject(id));
       reopened = true;
       return doc;
     } });
+    if(browseStyles) {entryUrl.searchParams.delete('home'); history.replaceState(null,'',entryUrl);}
     loading.hidden = false;
     sceneDocument = reopened ? selected : await projectRepository.createProject({ name: selected.name, sceneDocument: applyTemplateFinishes(selected) });
   }
@@ -117,6 +119,16 @@ async function boot() {
     game.needsFrame = true;
   }
   shell.root.addEventListener('editor-mode-change', syncTransformControls);
+
+  const focusButton=shell.root.querySelector('[data-action=focus]');
+  function showRoomOnly(enabled) {
+    shell.root.dataset.roomOnly=String(enabled);
+    focusButton.textContent=enabled?'展开编辑面板':'收起面板';
+    focusButton.setAttribute('aria-pressed',String(enabled));
+  }
+  focusButton.onclick=()=>showRoomOnly(shell.root.dataset.roomOnly!=='true');
+  shell.root.querySelectorAll('[data-editor-mode-choice],[data-panel]').forEach(b=>b.addEventListener('click',()=>showRoomOnly(false)));
+  showRoomOnly(Boolean(sceneDocument.buildings[0].floors[0].rooms[0]?.designPalette));
 
   function setViewMode(mode) {
     shell.root.dataset.viewMode = mode;
@@ -287,7 +299,9 @@ async function boot() {
     const next = prepareDocument(editableDocument(await projectRepository.loadProject(projectId)));
     shell.setProjectName(next.name);
     editor.replaceSceneDocument(next);
-    game.resetView(true);
+    setViewMode('3d');
+    showRoomOnly(Boolean(next.buildings[0].floors[0].rooms[0]?.designPalette));
+    game.openingView();
     await refreshAssets();
     await projectPanel.refresh(projectId);
     shell.setSaveState('saved', '已重新打开项目');
@@ -296,12 +310,14 @@ async function boot() {
 
   async function createProject() {
     let recentId;
-    const selected = await createProjectWizard({ canCancel: true, onShowcase, catalogAssets: libraryIndex.assets, recentProjects: await projectRepository.listProjects(), onOpenRecent: (id) => { recentId = id; return openProject(id); } });
+    const selected = await createProjectWizard({ canCancel: true, catalogAssets: libraryIndex.assets, recentProjects: await projectRepository.listProjects(), onOpenRecent: (id) => { recentId = id; return openProject(id); } });
     if (recentId || !selected) return;
     const next = await projectRepository.createProject({ name: selected.name, sceneDocument: applyTemplateFinishes(selected) });
     await openProject(next.projectId);
     return next;
   }
+
+  aiPanel.onCreateDesign=()=>createProject().catch(e=>shell.setUploadState('error',e.message));
 
   const projectPanel = new ProjectPanel({
     root: shell.projectPanel,
@@ -372,6 +388,10 @@ async function boot() {
   await refreshAssets();
   renderSpaceTree();
   shell.homeButton.addEventListener('click', () => createProject().catch((e) => shell.setUploadState('error', e.message)));
+  shell.root.querySelector('[data-action=interior]').onclick = () => { setViewMode('3d'); game.interiorView(); };
+  const stillButton=shell.root.querySelector('[data-action=still]');
+  stillButton.hidden=!['localhost','127.0.0.1','[::1]'].includes(location.hostname);
+  stillButton.onclick=async()=>{if(shell.root.dataset.viewMode==='2d') setViewMode('3d'); const {renderInteriorStill}=await import('./ui/interior-still.js'); await renderInteriorStill(game);};
   shell.overviewButton.addEventListener('click', () => { setViewMode('3d'); game.showAllLevels = true; game.resetView(); });
   const cutaway = shell.root.querySelector('[data-action="cutaway"]');
   cutaway.addEventListener('click', () => {

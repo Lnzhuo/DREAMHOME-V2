@@ -1,3 +1,4 @@
+import { validBrief, localBrief } from '../../src/data/room-brief.js';
 import { safeByokFetch } from '../security/llm-network.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -112,27 +113,29 @@ function scopeLargeScene(scene, catalog, message, selection, image) {
   return {scene:narrowed,prompt,warning,catalog:visibleCatalog,selectedTarget:selectedOnly ? selected.id : null};
 }
 
-export async function generateSceneCommand({ message, image, sceneDocument, selection = {}, catalog = {}, fetchImpl = fetch, env = process.env }) {
+async function requestJson({message,image,prompt,env,fetchImpl=fetch}) {
   if (!env.LLM_API_KEY || !env.LLM_BASE_URL || !env.LLM_MODEL) {
     const error = new Error('真实 LLM 服务未配置（LLM_API_KEY / LLM_BASE_URL / LLM_MODEL）');
     error.status = 503;
     throw error;
   }
   const request = env.LLM_SOURCE === 'byok' && fetchImpl === fetch ? safeByokFetch : fetchImpl;
-  const scope=scopeLargeScene(sceneDocument,catalog,message,selection,image);
-  if(scope.plan) return scope.plan;
+  const platformFlash = env.LLM_SOURCE !== 'byok' && env.LLM_MODEL === 'deepseek-flash'
+    && env.LLM_BASE_URL.replace(/\/$/, '') === 'https://api.llm.ustc.edu.cn/v1';
+  const defaultTimeout = env.LLM_SOURCE !== 'byok' && /^http:\/\/(127\.0\.0\.1|localhost):/.test(env.LLM_BASE_URL) ? 300_000 : 45_000;
   const response = await request(`${env.LLM_BASE_URL.replace(/\/$/, '')}/chat/completions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.LLM_API_KEY}` },
     body: JSON.stringify({
       model: env.LLM_MODEL,
-      messages: [{ role: 'system', content: scope.prompt }, { role: 'user', content: image ? [{ type: 'text', text: message }, { type: 'image_url', image_url: { url: image } }] : message }],
+      ...(platformFlash ? { thinking: { type: 'disabled' } } : {}),
+      messages: [{ role: 'system', content: prompt }, { role: 'user', content: image ? [{ type: 'text', text: message }, { type: 'image_url', image_url: { url: image } }] : message }],
       response_format: { type: 'json_object' },
       temperature: 0.1,
       max_tokens: 1200,
     }),
     redirect: 'error',
-    signal: AbortSignal.timeout(env.LLM_SOURCE !== 'byok' && /^http:\/\/(127\.0\.0\.1|localhost):/.test(env.LLM_BASE_URL) ? 300_000 : 45_000),
+    signal: AbortSignal.timeout(platformFlash ? 120_000 : defaultTimeout),
   });
   const body = await response.json();
   if (!response.ok) {
@@ -151,6 +154,13 @@ export async function generateSceneCommand({ message, image, sceneDocument, sele
     error.status = 502;
     throw error;
   }
+  return plan;
+}
+
+export async function generateSceneCommand({ message, image, sceneDocument, selection = {}, catalog = {}, fetchImpl = fetch, env = process.env }) {
+  const scope=scopeLargeScene(sceneDocument,catalog,message,selection,image);
+  if(scope.plan) return scope.plan;
+  const plan = await requestJson({message,image,prompt:scope.prompt,env,fetchImpl});
   // Normalize the model's relative command to the canonical absolute scene contract.
   // The UI must still preview and confirm the resolved destination.
   for (const cmd of Array.isArray(plan?.commands) ? plan.commands : []) {
@@ -201,6 +211,25 @@ export async function handleAiRequest(request, response) {
     let size = 0;
     for await (const chunk of request) { size += chunk.length; if (size > 5 * 1024 * 1024) { const error = new Error('请求过大'); error.status = 413; throw error; } chunks.push(chunk); }
     const input = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+    if (new URL(request.url,'http://localhost').pathname === '/api/ai/room-design') {
+      if (typeof input.message !== 'string' || !input.message.trim() || input.message.length>1200) {
+        throw Object.assign(new Error('请用 1 至 1200 字描述房间。'),{status:400});
+      }
+      const env = await getProviderEnvironment(sessionId,'llm');
+      const configured = Boolean(env.LLM_API_KEY && env.LLM_BASE_URL && env.LLM_MODEL);
+      let brief;
+      if (configured && !input.localOnly) {
+        const prompt = '你是室内设计师。理解中文需求并自主补全未指定的部分，直接给出协调的一套设计。只返回 JSON 对象，字段 space 为 living_room/master_bedroom/study/dining_room 之一，palette 为 linen(燕麦原木)、moss(灰绿胡桃)、clay(陶土暖白)、walnut(深色中古)之一。width、depth 为以米计的数字，遵照用户给的尺寸或面积，未指定时一般取5.8和4.8。details 为希望加入的功能数组，从 reading,storage,plants,rug,art,tv,work 中选择。默认 details 包含 art,rug,plants；用户明确排除某项时才删除。再添加需求中的功能，如看书添加 reading。note 用一句中文说明搭配意图，不承诺具体品牌、物品数量或未支持的功能。需要其他房间类型或尺寸超出每边3.2至9米时，返回 {"unsupported":true}。';
+        brief=await requestJson({message:input.message,prompt,env});
+        if (brief?.unsupported) throw Object.assign(new Error('当前可搭配客厅、卧室、书房和餐厅，每边支持 3.2 至 9 米。'),{status:422});
+        if (!validBrief(brief)) throw Object.assign(new Error('模型返回的搭配参数无效，请重试。'),{status:422});
+      } else {
+        try { brief=localBrief(input.message); } catch(error) { error.status=422; throw error; }
+      }
+      response.writeHead(200,{'Content-Type':'application/json'});
+      response.end(JSON.stringify({brief,source:configured && !input.localOnly ? 'llm':'local'}));
+      return true;
+    }
     if (typeof input.message !== 'string' || !input.message.trim() || !input.sceneDocument) {
       response.writeHead(400, { 'Content-Type': 'application/json' });
       response.end(JSON.stringify({ error: 'message 和 sceneDocument 必填' }));

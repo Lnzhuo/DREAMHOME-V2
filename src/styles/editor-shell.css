@@ -93,3 +93,16 @@
 .dh-material-settings label { display:flex; justify-content:space-between; align-items:center; margin:5px 0; gap:8px; }
 .dh-material-settings input { width:70px; }
 .dh-material-settings input:disabled { opacity:.5; }
+
+.dh-still {width:min(900px,90vw);max-height:92dvh;padding:18px;border:0;border-radius:8px;background:#faf9f5;color:#33382e}
+.dh-still::backdrop {background:#191c18bd}
+.dh-still header {display:flex;justify-content:space-between;align-items:center}
+.dh-still button,.dh-still a {padding:7px 12px;border:1px solid #c8c4b8;background:#fff;color:#374134;border-radius:4px;cursor:pointer;font:inherit}
+.dh-still img {width:100%;margin:14px 0;border-radius:4px}
+.dh-still a:not([hidden]) {display:inline-block;text-decoration:none}
+.dh-view-switch {max-width:calc(100% - 22px);flex-wrap:wrap}
+
+.dh-app[data-room-only="true"] .dh-workspace {grid-template-columns:minmax(0,1fr)}
+.dh-app[data-room-only="true"] :is(.dh-left,.dh-right) {display:none}
+.dh-focus-toggle {margin-left:auto}
+@media(max-width:760px){.dh-focus-toggle{display:none}}

@@ -60,7 +60,7 @@ try {
   await finishDesktop();
   const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const phone=await mobile.newPage();phone.on('pageerror',e=>errors.push(e.message));
-  await phone.goto(base);await phone.getByRole('button',{name:'打开已布置样板间'}).click();
+  await phone.goto(base);await phone.locator('[data-preset="sage"]').click();
   await phone.waitForFunction(()=>window.__dreamhome?.sceneDocument.placements.length>0,null,{timeout:65000,polling:100});
   await phone.locator('.dh-mobile-panels [data-panel="left"]').click();
   await phone.locator('[data-field=asset-search]').fill('沙发');

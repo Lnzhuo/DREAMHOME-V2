@@ -1,3 +1,4 @@
+import { handleInteriorRender } from './render/handler.mjs';
 import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -11,6 +12,7 @@ import { loadServerEnv } from './env.mjs';
 
 const dev = process.argv.includes('--dev');
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const { version } = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
 await loadServerEnv(root);
 const dist = path.resolve(process.env.DIST_DIR || path.join(root, 'dist'));
 const vite = dev ? await (await import('vite')).createServer({ root, server: { middlewareMode: true }, appType: 'spa' }) : null;
@@ -41,9 +43,10 @@ async function serveStatic(request, response) {
 const server = http.createServer(async (request, response) => {
   try {
     const pathname = new URL(request.url, 'http://localhost').pathname;
+    if (pathname === '/api/render/interior') return await handleInteriorRender(request,response);
     if (pathname === '/api/health') {
       response.writeHead(200, { 'Content-Type': 'application/json' });
-      response.end(JSON.stringify({ status: 'ok', application: 'DREAMHOME V2', lux3dConfigured: Boolean(process.env.AHOLO_API_KEY), lux3dPaidGenerationAllowed: process.env.LUX3D_ALLOW_PAID_GENERATION === 'true', llmConfigured: Boolean(process.env.LLM_API_KEY && process.env.LLM_BASE_URL && process.env.LLM_MODEL) }));
+      response.end(JSON.stringify({ status: 'ok', application: 'DREAMHOME V2', version, lux3dConfigured: Boolean(process.env.AHOLO_API_KEY), lux3dPaidGenerationAllowed: process.env.LUX3D_ALLOW_PAID_GENERATION === 'true', llmConfigured: Boolean(process.env.LLM_API_KEY && process.env.LLM_BASE_URL && process.env.LLM_MODEL) }));
       return;
     }
     if (pathname.startsWith('/api/settings/')) {
@@ -54,8 +57,8 @@ const server = http.createServer(async (request, response) => {
       if (!await handleLibraryRequest(request, response) && !response.writableEnded) { response.writeHead(404); response.end(); }
       return;
     }
-    if (pathname === '/api/ai/scene-command') {
-      await handleAiRequest(request, response);
+    if (pathname === '/api/ai/scene-command' || pathname === '/api/ai/room-design') {
+      if (await handleAiRequest(request, response) === false) { response.writeHead(405); response.end(); }
       return;
     }
     if (pathname.startsWith('/api/')) {

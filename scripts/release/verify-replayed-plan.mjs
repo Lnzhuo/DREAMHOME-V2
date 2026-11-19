@@ -23,7 +23,7 @@ const save=()=>fs.writeFile(path.join(out,'ai-e2e.json'),JSON.stringify(trace,nu
 try {
   let page=await ctx.newPage();
   await page.goto(base,{waitUntil:'domcontentloaded'});
-  await page.getByRole('button',{name:'打开已布置样板间'}).click({timeout:35000});
+  await page.locator('[data-preset="sage"]').click({timeout:35000});
   await page.waitForFunction(()=>window.__dreamhome?.sceneDocument.placements.length>0,null,{timeout:50000});
   console.log('已在独立浏览器打开随包客厅');
   const actions=await page.evaluate(({move,color})=>{

@@ -1,3 +1,6 @@
+import pkg from '../../../package.json' with { type: 'json' };
+import { mountStyleGallery } from './style-gallery.js';
+import { mountRoomDesigner } from './room-designer.js';
 import { ROOM_TEMPLATES, FLOORPLAN_TEMPLATES, ROOM_REFERENCES, VILLA_TEMPLATES, createSingleRoomDocument, createApartmentDocument, createVillaDocument } from '../../data/v2-contracts.js';
 import { EXISTING_LUX3D_ASSETS } from '../../assets/generated/existing-lux3d.js';
 import { LUX3D_ROOM_SAMPLES, createLux3dRoomSample } from '../../assets/generated/lux3d-room-samples.js';
@@ -11,14 +14,15 @@ function preview(document) {
   return `<svg viewBox="${minX-.5} ${minY-.5} ${maxX-minX+1} ${maxY-minY+1}" role="img" aria-label="模板轮廓预览">${polygons}</svg>`;
 }
 function prepare(doc) { doc.assets=EXISTING_LUX3D_ASSETS.map(a=>structuredClone(a));return doc; }
-export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRecent,onShowcase,catalogAssets=[]}={}) {
+export function createProjectWizard({canCancel=false,recentProjects=[],onOpenRecent,catalogAssets=[]}={}) {
   return new Promise((resolve) => {
     const overlay=document.createElement('div');overlay.className='dh-preview-modal dh-onboarding';
-    overlay.innerHTML=`<div class="dh-onboarding-card"><header class="dw-header"><strong>DREAMHOME <small>设计工作室</small></strong>${canCancel?'<button type="button" class="dw-cancel" aria-label="取消新建">返回编辑器</button>':''}</header><div class="dw-intro"><div class="dw-intro-copy"><h1>创建家居设计</h1><p>选一个空房间或平层户型，按照自己的尺寸慢慢布置。</p><div class="dw-jump"><a href="#dw-room">设计单个房间</a><a href="#dw-plan">设计整套平层</a>${onShowcase?'<button type="button" class="dw-showcase">打开已布置样板间</button>':''}</div></div><figure><img src="/room-references/dreamhome-showcase.jpg" alt="原木与奶油色客厅样板间，含原创沙发、茶几、落地灯和地毯"><figcaption>原木与奶油色 · 可编辑客厅样板间实景</figcaption></figure></div><div data-recent></div><div data-lux-samples></div><div class="dh-onboarding-types"><section id="dw-room"><div class="dw-title"><div><h2>从空房间开始</h2><p>选择房间类型，后续可编辑形状、尺寸和门窗。</p></div></div><div class="dh-template-grid" data-mode="room"></div></section><section id="dw-plan"><div class="dw-title"><div><h2>设计整套平层</h2><p>从可编辑的示意户型开始，调整到符合你的家。</p></div></div><div class="dh-template-grid" data-mode="apartment"></div></section><section class="dh-onboarding-extension"><h2>别墅与庭院</h2><p>从多层示意户型开始，支持分层查看与楼梯、庭院参数。</p><div class="dh-template-grid" data-mode="villa"></div></section></div></div>`;
+    overlay.innerHTML=`<div class="dh-onboarding-card"><header class="dw-header"><strong>DREAMHOME <small>设计工作室 · v${pkg.version}</small></strong>${canCancel?'<button type="button" class="dw-cancel" aria-label="取消新建">返回编辑器</button>':''}</header><div class="dw-intro"><div class="dw-intro-copy"><h1><span>从一句话，</span><span>布置一个家。</span></h1><p>说说想怎样使用这个空间，设计助手会帮你搭配家具、材质与灯光。</p><div data-room-designer></div><div class="dw-jump"><a href="#dw-room">设计单个房间</a><a href="#dw-plan">设计整套平层</a></div></div><section id="dw-styles" class="dw-style-gallery" aria-labelledby="dw-styles-title"><h2 id="dw-styles-title">精选风格搭配</h2><div class="dw-look-grid"></div><p role="status"></p></section></div><div data-recent></div><div data-lux-samples></div><div class="dh-onboarding-types"><section id="dw-room"><div class="dw-title"><div><h2>从空房间开始</h2><p>选择房间类型，后续可编辑形状、尺寸和门窗。</p></div></div><div class="dh-template-grid" data-mode="room"></div></section><section id="dw-plan"><div class="dw-title"><div><h2>设计整套平层</h2><p>从可编辑的示意户型开始，调整到符合你的家。</p></div></div><div class="dh-template-grid" data-mode="apartment"></div></section><section class="dh-onboarding-extension"><h2>别墅与庭院</h2><p>从多层示意户型开始，支持分层查看与楼梯、庭院参数。</p><div class="dh-template-grid" data-mode="villa"></div></section></div></div>`;
     document.body.appendChild(overlay);
     const close=value=>{overlay.remove();resolve(value);};
+    mountRoomDesigner(overlay.querySelector('[data-room-designer]'),catalogAssets,close);
     overlay.querySelector('.dw-cancel')?.addEventListener('click',()=>close(null));
-    overlay.querySelector('.dw-showcase')?.addEventListener('click',async event=>{const button=event.currentTarget;try{button.disabled=true;const doc=await onShowcase();if(doc)close(doc);else button.disabled=false;}catch(error){button.disabled=false;button.textContent=`样板间打开失败：${error.message}`;}});
+    mountStyleGallery(overlay.querySelector('#dw-styles'),catalogAssets,close);
     const samples = overlay.querySelector('[data-lux-samples]');
     if (catalogAssets.length) {
       samples.className = 'dw-samples';

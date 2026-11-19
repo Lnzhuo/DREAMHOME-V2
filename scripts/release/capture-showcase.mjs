@@ -8,7 +8,7 @@ const browser = await chromium.launch({channel:'msedge',headless:true,args:['--u
 try {
   const page=await browser.newPage({viewport:{width:1440,height:900}});
   await page.goto(base);
-  await page.getByRole('button',{name:'打开已布置样板间'}).click();
+  await page.locator('[data-preset="sage"]').click();
   await page.waitForFunction(() => {
     const app=window.__dreamhome;
     return app?.sceneDocument.placements.length && app.sceneDocument.placements.every(p=>app.game.getObjectGroup(p.id)?.userData.hasRealModel);

@@ -1,3 +1,5 @@
+import { addPanelledWall, addTimberPanel, dressWindow, windowDaylight } from './studio-finishes.js';
+import { PALETTES } from '../data/room-brief.js';
 import * as THREE from 'three';
 import { getRoomBounds } from '../data/scene-operations.js';
 import { getPBRMaterial } from './materials.js';
@@ -42,6 +44,7 @@ function createArchitecture(roomGroup, floor, room, materials, renderedWalls) {
     const wallGroup = new THREE.Group();
     wallGroup.name = `wall:${wall.id}`;
     wallGroup.userData.wallId = wall.id;
+    wallGroup.userData.midpoint={x:(wall.start.x+wall.end.x)/2,z:(wall.start.y+wall.end.y)/2};
     const adjacent = floor.rooms.find(r=>r.id!==room.id && wall.roomIds?.includes(r.id));
     wallGroup.userData.partition = Boolean(adjacent);
     const otherWallMaterial = adjacent && getPBRMaterial(definitions?.find(m=>m.id===adjacent.wallMaterialId));
@@ -52,6 +55,12 @@ function createArchitecture(roomGroup, floor, room, materials, renderedWalls) {
     const thickness = wall.thickness.value;
     const height = wall.height.value;
     const openings = floor.openings.filter((opening) => opening.wallId === wall.id);
+
+    const studio = Object.hasOwn(PALETTES,room.designPalette);
+    if (studio && wall === floor.walls[0] && !openings.length) {
+      if (['dado','moulding'].includes(room.designWallFinish)) addPanelledWall(wallGroup,wall,room,frame.length,height);
+      else addTimberPanel(wallGroup,wall,room.designPalette,frame.length,height);
+    }
 
     const addSegment = (start, end, bottom, top, segmentThickness, outwardOffset, material) => {
       const length = end - start;
@@ -108,7 +117,7 @@ function createArchitecture(roomGroup, floor, room, materials, renderedWalls) {
         continue;
       }
       if (opening.type !== 'window') continue;
-      const frameMat = mat('#3a2b20');
+      const frameMat = mat(studio ? '#8d795f' : '#3a2b20');
       const centerAlong = opening.offsetFromWallStart + opening.width.value / 2;
       const centerY = opening.sillHeight.value + opening.height.value / 2;
       const addFrameBox = (width, boxHeight, depth, along, y, inward, material = frameMat) => {
@@ -133,6 +142,7 @@ function createArchitecture(roomGroup, floor, room, materials, renderedWalls) {
           opacity: .31, depthWrite: false, side: THREE.DoubleSide,
         }),
       );
+      pane.name='window-glass';
       pane.position.set(
         wall.start.x + frame.direction.x * centerAlong - frame.outward.x * 0.04,
         centerY,
@@ -140,6 +150,19 @@ function createArchitecture(roomGroup, floor, room, materials, renderedWalls) {
       );
       pane.rotation.y = frame.rotationY;
       wallGroup.add(pane);
+      if (studio) {
+        const insideYaw=Math.atan2(-frame.outward.x,-frame.outward.y);
+        dressWindow(wallGroup,opening,pane.position.x,pane.position.z,insideYaw,height);
+        // Diffuse daylight behind the glazing, visible through the opening.
+        const sky=new THREE.Mesh(new THREE.PlaneGeometry(opening.width.value,opening.height.value),
+          windowDaylight());
+        sky.name='daylight-glazing';
+        sky.position.copy(pane.position);
+        sky.position.x+=frame.outward.x*.12;
+        sky.position.z+=frame.outward.y*.12;
+        sky.rotation.y=frame.rotationY;
+        wallGroup.add(sky);
+      }
 
       // A continuous sill meets the bottom frame and projects slightly into the room.
       addFrameBox(opening.width.value + 0.08, 0.045, 0.19, centerAlong, Math.max(0.0225, opening.sillHeight.value - 0.0225), 0.07, woodMat);
@@ -184,6 +207,10 @@ export function createRoom(scene, sceneDocument, roomId, { includeLights = true,
     return new THREE.ShapeGeometry(shape).rotateX(-Math.PI / 2);
   }
   const floorGeometry = surfaceGeometry(floorData.stairOpening);
+  if (roomData.designPalette) {
+    const uv=floorGeometry.getAttribute('uv');
+    for(let i=0;i<uv.count;i++) uv.setXY(i,uv.getX(i)*.23,uv.getY(i)*.23);
+  }
   const floor = new THREE.Mesh(floorGeometry, floorMat);
   floor.receiveShadow = true;
   floor.name = `floor:${floorData.id}`;
@@ -198,6 +225,7 @@ export function createRoom(scene, sceneDocument, roomId, { includeLights = true,
     ceiling.userData.walkCeiling = true;
     ceiling.userData.roomId = roomData.id;
     ceiling.visible = false;
+    ceiling.castShadow = Boolean(roomData.designPalette);
     room.add(ceiling);
   }
   if (roomData.roomType === 'living_room' && !roomData.templateId && sceneDocument.projectType === 'room') {
@@ -260,7 +288,8 @@ export function createRoom(scene, sceneDocument, roomId, { includeLights = true,
 
   let lights = null;
   if (includeLights) {
-    const hemi = new THREE.HemisphereLight('#fff1dc', '#4a3527', 0.85);
+    const studio = Object.hasOwn(PALETTES,roomData.designPalette);
+    const hemi = new THREE.HemisphereLight(studio ? '#f1f4ff' : '#fff1dc', '#5d4836', studio ? .62 : .85);
     room.add(hemi);
 
     const fill = new THREE.DirectionalLight('#d7deff', 0.32);
@@ -272,6 +301,12 @@ export function createRoom(scene, sceneDocument, roomId, { includeLights = true,
     const envelope = getRoomBounds({boundary:footprints});
     const span = Math.max(envelope.width,envelope.depth,6);
     dir.position.set(envelope.centerX - span*.72, span*1.12, envelope.centerY + span*.6);
+    if (studio) {
+      // Low afternoon sun crosses the glazing and casts the mullions onto the floor.
+      dir.position.set(envelope.centerX-span*1.22,span*.64,envelope.centerY+span*.43);
+      dir.color.set('#ffe2b9');
+      dir.intensity=2.65;
+    }
     dir.castShadow = true;
     dir.shadow.mapSize.set(2048, 2048);
     dir.shadow.camera.left = -span;

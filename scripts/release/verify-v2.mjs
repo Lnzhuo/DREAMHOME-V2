@@ -150,7 +150,7 @@ try {
   await page.locator('.dh-preview-close').click();
   mark(health.lux3dConfigured ? '会话设置入口与平台 Aholo 真实只读鉴权' : '无平台凭据的独立交付包可打开个人 API 设置');
   await page.locator('[data-action=home]').click();
-  await page.getByRole('button',{name:'打开已布置样板间'}).click();
+  await page.locator('[data-preset="sage"]').click();
   await page.waitForFunction(()=>window.__dreamhome.sceneDocument.name.includes('样板间'));
   await page.waitForFunction(()=>Object.values(window.__dreamhome.game.placementGroups).every(g=>g.userData.hasRealModel));
   await page.locator('[data-action=overview]').click(); await page.waitForTimeout(1000);
