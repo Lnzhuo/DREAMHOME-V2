@@ -256,7 +256,18 @@ export class AssetLibrary {
       if (asset.referenceSource && typeof asset.referenceSource === 'object') {
         const r = asset.referenceSource, description = document.createElement('div');
         description.textContent = `参考照片：${r.author || '作者未知'} · ${r.license || '许可待核'}`; license.append(description);
-        if (r.sourceUrl) { const link = document.createElement('a'); link.href = r.sourceUrl; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = '查看参考照片来源'; license.append(link); }
+        if (r.creator) {
+          const creator = document.createElement('div');
+          creator.textContent = '原作设计或制作：' + r.creator;
+          license.append(creator);
+        }
+        for (const [url, label] of [[r.sourceUrl, '查看参考照片来源'], [r.licenseUrl, '查看参考照片许可']]) {
+          if (typeof url !== 'string' || !/^https?:\/\//i.test(url)) continue;
+          const line = document.createElement('div');
+          const link = document.createElement('a');
+          link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = label;
+          line.append(link); license.append(line);
+        }
       }
       if (requiresReview(asset) && asset.qa?.visualReview) { const note = document.createElement('div'); note.className = 'dh-muted'; note.textContent = asset.qa.visualReview; license.append(note); }
       card.append(thumb, name, source, place, preview, license);

@@ -111,7 +111,7 @@ def frozen_credit_data(root):
     csv.writer(stream,quoting=csv.QUOTE_ALL,lineterminator='\n').writerows(result)
     return raw,stream.getvalue().encode('utf-8-sig')
 
-def package(output, preview, node_root):
+def package(output, preview, node_root, catalog=None):
     node = node_root / 'node.exe'
     license_file = node_root / 'LICENSE'
     if not node.is_file() or not license_file.is_file():
@@ -154,7 +154,7 @@ def package(output, preview, node_root):
         add(ROOT/'docs/verification/v2/DREAMHOME-V2-demo.webm')
     lib = ROOT/'data/library'
     index_path = lib/'index.json'
-    index,frozen_index=catalog_snapshot(index_path)
+    index,frozen_index=catalog_snapshot(catalog or index_path)
     add(index_path)
     fixed_contents['data/library/index.json']=frozen_index
     for model in index['assets']:
@@ -168,7 +168,7 @@ def package(output, preview, node_root):
         expected_hashes[(folder/'model.glb').relative_to(ROOT).as_posix()]=model['archive']['sha256']
         for k,filename in [('thumbnail','thumbnail.png'),('planThumbnail','plan.png')]:
             if (model.get(k) or {}).get('sha256'): expected_hashes[(folder/filename).relative_to(ROOT).as_posix()]=model[k]['sha256']
-        fixed_contents[(folder/'asset.json').relative_to(ROOT).as_posix()]=(folder/'asset.json').read_bytes()
+        fixed_contents[(folder/'asset.json').relative_to(ROOT).as_posix()]=(json.dumps(model,ensure_ascii=False,indent=2)+'\n').encode('utf-8') if catalog else (folder/'asset.json').read_bytes()
         tree(folder)
     active_material_dirs=set()
     for material in index['materials']:
@@ -259,10 +259,11 @@ if __name__=='__main__':
     cli.add_argument('--output',type=Path,default=DELIVERY)
     cli.add_argument('--preview',action='store_true',help='允许预演时最终报告或启动脚本仍在整理')
     cli.add_argument('--node-dir',type=Path)
+    cli.add_argument('--catalog',type=Path,help='使用已逐件验收的发布目录快照')
     args=cli.parse_args()
     bundled=ROOT/'runtime'
     node_dir=args.node_dir or (bundled if (bundled/'node.exe').is_file() else Path(shutil.which('node') or '').parent)
     if not (node_dir/'LICENSE').is_file() and not args.node_dir:
         version=subprocess.check_output([str(node_dir/'node.exe'),'--version'],text=True).strip()
         node_dir=Path(os.environ['LOCALAPPDATA'])/'Programs/nodejs-portable'/('node-'+version+'-win-x64')
-    package(args.output.resolve(),args.preview,node_dir.resolve())
+    package(args.output.resolve(),args.preview,node_dir.resolve(),args.catalog)

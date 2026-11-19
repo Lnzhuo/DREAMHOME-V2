@@ -162,7 +162,7 @@ write('DREAMHOME_V2_FINAL_REPORT.md',f"""# DREAMHOME V2 交付说明
 
 ## 积分与模型服务
 
-原授权总额 3600。该次快照的任务级费用列合计 {recorded} 积分，新增任务保守冻结 {frozen} 积分，两者不能相加。失败任务可能发生退费，不明提交保留冻结且不重试。余额取有时间戳的账户用量页记录，未证实的实时余额保留为空。完整账本见 LUX3D_CREDIT_LEDGER.csv。
+本轮起始余额 1720，最低保留 300。全项目任务级费用合计 {recorded} 积分。账户快照、任务实际费用和未结算冻结分别记录于 LUX3D_CREDIT_LEDGER.csv。
 
 {ai_text} {apartment_text} Aholo 与 LLM 用户凭据分别在设置里配置，服务端加密保存在当前会话；导出的设计、截图及发行包不带平台密钥。
 

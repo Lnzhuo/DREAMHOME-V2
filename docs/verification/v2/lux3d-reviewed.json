@@ -1,7 +1,7 @@
 {
-  "createdAt": "2026-11-19 19:06 中国标准时间",
-  "catalogued": 84,
-  "strictReady": 48,
+  "createdAt": "2026-11-19 22:53 中国标准时间",
+  "catalogued": 140,
+  "strictReady": 112,
   "items": [
     {
       "id": "asset-1089f183-dc58-47f1-98bd-621d204f31aa",
@@ -564,70 +564,55 @@
       "taskId": "8434127",
       "name": "圆形浴室镜",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
-      "sceneReport": "data/library/lux-qa/batch-1795083639720.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "sceneReport": "data/library/lux-qa/batch-1795087757977.json",
+      "visualReview": "已人工目检，圆镜与浅木边框完整。直径按 0.70 米等比校准，新尺寸下场景复验通过。",
+      "reasons": []
     },
     {
       "id": "asset-9bccf210-f56b-451d-bba0-97777273c59b",
       "taskId": "8434403",
       "name": "金属圆盘吊灯",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795083703033.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，吊杆与圆盘连续，俯视灯盘呈圆形。",
+      "reasons": []
     },
     {
       "id": "asset-04c2c984-b284-446b-9bd4-86f033f923c5",
       "taskId": "8434389",
       "name": "独立微波炉",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795083752714.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，箱体、玻璃门与控制面板完整，顶视为矩形。",
+      "reasons": []
     },
     {
       "id": "asset-44d97b6b-8c45-4ff0-aeac-4df9c0fe01f3",
       "taskId": "8434434",
       "name": "带抽屉换鞋凳",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795083752714.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，软座、抽屉与四脚完整，坐面方向正确。",
+      "reasons": []
     },
     {
       "id": "asset-b24fecd7-97c5-463e-903d-25bd439efc4f",
       "taskId": "8434399",
       "name": "升降办公桌",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795083781736.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，矩形桌面与两根升降柱、横脚朝向正确。",
+      "reasons": []
     },
     {
       "id": "asset-28c1092f-55e8-40f5-ab31-e8e4b3952310",
@@ -998,42 +983,649 @@
       "taskId": "8440674",
       "name": "三头餐厅吊灯",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795086230286.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，三枚灯头均悬于横梁下方，俯视排列正确。",
+      "reasons": []
     },
     {
       "id": "asset-a2cf68c1-72ad-472e-83c9-e307d183472c",
       "taskId": "8440705",
       "name": "玄关储物柜",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795086257097.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，门板、抽屉与柜脚清楚，柜体直立。",
+      "reasons": []
     },
     {
       "id": "asset-f620cf27-cd9e-4271-8258-8cd643660388",
       "taskId": "8440713",
       "name": "宽叶室内盆栽",
       "source": "lux3d_text",
-      "strictReady": false,
+      "strictReady": true,
       "scenePassed": true,
       "sceneReport": "data/library/lux-qa/batch-1795086285169.json",
-      "visualReview": "待人工检查真实缩略图",
-      "reasons": [
-        "增量目检或摆放记录仍带备注",
-        "外观仍有差异、备注或待复核"
-      ]
+      "visualReview": "已人工目检，阔叶从花器向上生长，俯视树冠与花盆方向一致。",
+      "reasons": []
+    },
+    {
+      "id": "asset-89f0de02-6aba-46c8-996a-5acef54a9b61",
+      "taskId": "8441147",
+      "name": "布艺脚踏凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086448772.json",
+      "visualReview": "已人工目检，四条木腿与布艺方坐垫完整，脚凳宽深与坐高合理。",
+      "reasons": []
+    },
+    {
+      "id": "asset-151310e9-d956-4cf8-958a-0fa5644b03c4",
+      "taskId": "8441487",
+      "name": "厨房烤箱高柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795087757977.json",
+      "visualReview": "已人工目检，高柜门板、嵌入式烤箱和把手完整。按柜高 2.10 米校准后，深度 0.53 米，场景复验通过。",
+      "reasons": []
+    },
+    {
+      "id": "asset-b0799106-03f6-48c5-880c-986734b81165",
+      "taskId": "8441428",
+      "name": "带扶手餐椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086560367.json",
+      "visualReview": "已人工目检，餐椅有独立扶手、木靠背和四条座脚，座面朝前。",
+      "reasons": []
+    },
+    {
+      "id": "asset-c95f1a7b-492f-4d61-8ac2-3c6a0e4ab850",
+      "taskId": "8441563",
+      "name": "独立式浴缸",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795086587569.json",
+      "visualReview": "已人工目检，浴缸内腔、外壁和底座完整，开口朝上，宽深高符合独立浴缸比例。",
+      "reasons": []
+    },
+    {
+      "id": "asset-4ec8f077-9d56-463c-9f82-ba8e18545ded",
+      "taskId": "8442190",
+      "name": "简约壁灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795087757977.json",
+      "visualReview": "已人工目检，支座、灯臂与灯筒完整。按灯高 0.30 米等比校准，深度 0.14 米，场景复验通过。",
+      "reasons": []
+    },
+    {
+      "id": "asset-d1275aaa-720a-4798-8368-8bd4a4d55a18",
+      "taskId": "8442004",
+      "name": "空气净化器",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795087006093.json",
+      "visualReview": "已人工目检，圆柱壳体、进风格栅、顶部出风口与电源线完整，机器直立。",
+      "reasons": []
+    },
+    {
+      "id": "asset-c3b7965b-b608-42a5-8710-c1c93aa8d2c4",
+      "taskId": "8442368",
+      "name": "方形布艺脚凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795087034850.json",
+      "visualReview": "已人工目检，方形包布凳体与短木脚完整，与已入库四长腿布艺脚踏凳结构不同。",
+      "reasons": []
+    },
+    {
+      "id": "asset-65aae379-f074-4516-8519-aec53f97081a",
+      "taskId": "8445405",
+      "name": "实拍绿绒直背扶手椅",
+      "source": "lux3d_image",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795088157081.json",
+      "visualReview": "已人工目检，对照馆藏原图，四条带脚轮木腿、弧形扶手和绿色包面完整。按馆藏高度 0.829 米等比换算，模型宽深各约 0.67 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-2aecff89-9ee3-4c0e-a2cf-cf165d975222",
+      "taskId": "8446320",
+      "name": "扫地机器人",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795088486539.json",
+      "visualReview": "已人工目检，低矮机身、包边、轮组与侧刷完整，俯视轮廓和 0.35 米机身尺寸一致。",
+      "reasons": []
+    },
+    {
+      "id": "asset-32c76120-fa28-4e82-be00-424c9c118993",
+      "taskId": "8446338",
+      "name": "独立厨房岛台",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795088486539.json",
+      "visualReview": "已人工目检，岛台有完整长台面、封闭柜门和侧向开放搁板，可从两侧接近，台高 0.90 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-eead259a-40be-4d83-8a2c-82f4fa1afd92",
+      "taskId": "8447046",
+      "name": "实拍木纹双门边柜",
+      "source": "lux3d_image",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795088879415.json",
+      "visualReview": "已人工目检，对照馆藏原图，双门、木纹镶面和四角饰件清楚。已按原物 1.625 × 0.584 × 1.308 米校正网格比例，俯视图与柜体一致。",
+      "reasons": []
+    },
+    {
+      "id": "asset-2782b2bb-41fb-430c-a950-5e183e840888",
+      "taskId": "8447090",
+      "name": "实拍弯腿翻盖写字桌",
+      "source": "lux3d_image",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795088820113.json",
+      "visualReview": "已人工目检，对照馆藏照片，翻盖、锁饰和四根弯腿完整，书桌站姿与顶视方向正确，宽深均接近馆藏实物。",
+      "reasons": []
+    },
+    {
+      "id": "asset-8cc014f3-13b8-4612-88cc-4d9038be4739",
+      "taskId": "8447042",
+      "name": "实拍抽屉针线工作桌",
+      "source": "lux3d_image",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795088820113.json",
+      "visualReview": "已人工目检，对照馆藏照片，两层抽屉、布袋和四根细腿均可辨。按实物高度换算后的宽深与馆藏记录接近。",
+      "reasons": []
+    },
+    {
+      "id": "asset-a2e3501e-9639-40b7-b89c-e6d53180400b",
+      "taskId": "8447873",
+      "name": "阳台花架",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795089102475.json",
+      "visualReview": "已人工目检，花架层板平放、架脚竖直，架上留空，可摆放小花盆。",
+      "reasons": []
+    },
+    {
+      "id": "asset-97c1a309-afb9-49f5-bd46-f04acddc6017",
+      "taskId": "8448495",
+      "name": "淋浴凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795089340042.json",
+      "visualReview": "已人工目检，凹面座板、排水孔和两侧提手完整，四腿均有防滑脚垫，坐高 0.45 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-4a94d527-8018-476b-a97a-7c5286e62a1d",
+      "taskId": "8448682",
+      "name": "文件柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795089367419.json",
+      "visualReview": "已人工目检，四层金属抽屉按竖向排列，封闭柜体与顶视矩形一致，宽 0.48 米、深 0.57 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-e6eeb9b6-5a3f-413a-8561-92680aeea03c",
+      "taskId": "8448804",
+      "name": "带门书柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795089455262.json",
+      "visualReview": "已人工目检，上半部为开放搁板，下半部有带铰链和拉手的双扇门，底排抽屉完整，柜内留空。",
+      "reasons": []
+    },
+    {
+      "id": "asset-aaee1905-ccc0-4ac9-b05c-5bc3571fbe11",
+      "taskId": "8448827",
+      "name": "立式吸尘器",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795089483717.json",
+      "visualReview": "已人工目检，手柄、集尘筒、软管与底部吸头相连，直立姿态及地面吸头方向正确。",
+      "reasons": []
+    },
+    {
+      "id": "asset-317ce62e-51e3-4008-b1db-60f200d8a401",
+      "taskId": "8449410",
+      "name": "可调阅读台灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795089721357.json",
+      "visualReview": "已人工目检，台灯的金属关节臂、灯罩和圆底座完整，灯口朝向桌面，电源线位于底座后方。",
+      "reasons": []
+    },
+    {
+      "id": "asset-b13af1fc-51f9-47ec-adf0-7af5584bd109",
+      "taskId": "8449389",
+      "name": "独立燃气灶",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795090045018.json",
+      "visualReview": "已人工目检，四个灶眼与锅架朝上，调节旋钮位于正面，台式灶具的金属底壳完整。",
+      "reasons": []
+    },
+    {
+      "id": "asset-5c64e657-81c0-4821-9fee-f4062cc639b1",
+      "taskId": "8450789",
+      "name": "嵌入式洗碗机",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795090253485.json",
+      "visualReview": "已人工目检，洗碗机的钢制前门、前置控制条与踢脚部完整，0.85 米机高可放入台下。",
+      "reasons": []
+    },
+    {
+      "id": "asset-9eeb52f9-3ab8-42ec-96b7-33ba0296a4c2",
+      "taskId": "8450584",
+      "name": "浴室毛巾架",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795090281404.json",
+      "visualReview": "已人工目检，两侧金属支架、上层玻璃搁板和下层挂巾杆均完整，0.50 米宽度适合单条毛巾。",
+      "reasons": []
+    },
+    {
+      "id": "asset-1f49c8a0-a45f-424b-84d2-d01f65a0a10f",
+      "taskId": "8450198",
+      "name": "床头阅读壁灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795090384680.json",
+      "visualReview": "已人工目检，壁座、外伸关节臂和下照灯筒连接完整，俯视可辨墙侧与灯头方向。",
+      "reasons": []
+    },
+    {
+      "id": "asset-2641c9d4-d8bd-45ea-8672-debffd7eaeaa",
+      "taskId": "8451556",
+      "name": "厨房抽拉水龙头",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795090668560.json",
+      "visualReview": "已人工目检，高弯出水管、可抽拉喷头和底部安装接头可辨，出水口向下，高度 0.38 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-c3443395-d6b6-404e-bdad-00adcf9242f4",
+      "taskId": "8451047",
+      "name": "厨房双槽水槽",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795090696217.json",
+      "visualReview": "已人工目检，两个槽体各有独立排水口，台面安装边连续，开口朝上，宽 0.70 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-cb5ec433-36c3-4f97-af79-cf1e37853630",
+      "taskId": "8452527",
+      "name": "嵌入式浴缸",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795091159775.json",
+      "visualReview": "已人工目检，浴缸上下方向正确，四周有平整安装翻边，排水口与弧形内腔清楚。",
+      "reasons": []
+    },
+    {
+      "id": "asset-a4a91e40-326e-477f-8dfc-710efedaf3e0",
+      "taskId": "8452811",
+      "name": "靠背吧椅",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795091218160.json",
+      "visualReview": "已人工目检，靠背软座、四条高脚和环形脚踏均完整，俯视座面与靠背方向一致。",
+      "reasons": []
+    },
+    {
+      "id": "asset-c29e0ac8-36f0-4446-bef8-e6c9ebf1e6ac",
+      "taskId": "8452606",
+      "name": "落地空调",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795091291381.json",
+      "visualReview": "已人工目检，柜式机身竖直，送风百叶、控制面板和下部格栅可辨，机高 1.72 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-48f41323-2e45-4581-8beb-db6161eaea2d",
+      "taskId": "8454212",
+      "name": "木栏婴儿床",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795092491533.json",
+      "visualReview": "已人工目检，四面木栏杆与四角床柱连续，床垫位于栏框内，长 1.38 米、宽 0.65 米，床面朝上。",
+      "reasons": []
+    },
+    {
+      "id": "asset-b0a2489f-409a-4d2b-9cae-c80b29257d2c",
+      "taskId": "8455269",
+      "name": "落地衣帽架",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795092759968.json",
+      "visualReview": "已人工目检，立柱由三条外张木脚支撑，上部圆头挂钩彼此分开，俯视可见三脚占地。",
+      "reasons": []
+    },
+    {
+      "id": "asset-f7a4f754-3246-423a-8d40-9e8a8f86f07c",
+      "taskId": "8454611",
+      "name": "折叠熨衣板",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795092908091.json",
+      "visualReview": "已人工目检，蓝色包布板面水平，展开的交叉支腿与两条横脚均完整，板高 0.88 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-f97240e3-af84-4288-9805-b10fc7d1c38a",
+      "taskId": "8455268",
+      "name": "折叠行李架",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795093086611.json",
+      "visualReview": "已人工目检，两侧 X 形支架、横撑和四条承重带清楚，展开后顶部平整，架上留空。",
+      "reasons": []
+    },
+    {
+      "id": "asset-c420ea04-aac6-40ae-a8de-fa2a5575622c",
+      "taskId": "8456471",
+      "name": "落地取暖片",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795093926781.json",
+      "visualReview": "已人工目检，油汀散热片平行排列，侧端有控制面板，底部轮脚与电源线完整，机身高 0.63 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-2f635a66-7b53-42b3-8ac2-0a37e4d580d2",
+      "taskId": "8457932",
+      "name": "电钢琴",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795094301843.json",
+      "visualReview": "已人工目检，琴键、控制台、两端立板及脚踏组件完整，键盘朝前，1.35 米宽度适合家用电钢琴。",
+      "reasons": []
+    },
+    {
+      "id": "asset-35bfe8ad-7378-49c0-9349-56ce39164dca",
+      "taskId": "8458599",
+      "name": "软包升降琴凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795094526134.json",
+      "visualReview": "已人工目检，皮面软座、两侧调节钮和四腿完整。实测模型座宽约 0.70 米，目录按实际形态标为软包琴凳。",
+      "reasons": []
+    },
+    {
+      "id": "asset-6ed72e83-deda-4d9c-b337-5c2a28c2ad4b",
+      "taskId": "8458958",
+      "name": "三脚画架",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795094569722.json",
+      "visualReview": "已人工目检，三脚支撑、画板托槽、上部调节压块均可辨，画架空置并朝前展开。",
+      "reasons": []
+    },
+    {
+      "id": "asset-f2df928d-58d0-4fcc-86da-4d9c407d22ac",
+      "taskId": "8459372",
+      "name": "圆筒脚踏垃圾桶",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795094628213.json",
+      "visualReview": "已人工目检，不锈钢桶壁、闭合圆盖、后部铰接端和前部脚踏板完整，俯视外轮廓正确。",
+      "reasons": []
+    },
+    {
+      "id": "asset-1dbd9dc5-0e12-46a0-91ce-8d86eb80ac2a",
+      "taskId": "8461226",
+      "name": "分层报刊架",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795095468045.json",
+      "visualReview": "已人工目检，倾斜金属网袋分层连接在两侧支架上，底部支脚稳固，架内留空。",
+      "reasons": []
+    },
+    {
+      "id": "asset-43eec130-eb21-4639-995f-4ddea09183c4",
+      "taskId": "8462069",
+      "name": "软木公告板",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795095980018.json",
+      "visualReview": "已人工目检，已把深度校正为设计值 0.035 米。木框与软木面连续，俯视呈薄板，正面竖直。",
+      "reasons": []
+    },
+    {
+      "id": "asset-28fcc243-fd3f-4897-bffb-f4da22bec460",
+      "taskId": "8462664",
+      "name": "带木条鞋架的换鞋长凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795095931338.json",
+      "visualReview": "已人工目检，木坐板和下层条形鞋架完整，未附带鞋子，可独立摆放；目录按实际直板外形命名。",
+      "reasons": []
+    },
+    {
+      "id": "asset-8a383d97-df40-441a-b788-f68c922fa5ab",
+      "taskId": "8462826",
+      "name": "立式除湿机",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795095960290.json",
+      "visualReview": "已人工目检，机身顶部出风口、侧面格栅、下部水箱与底部脚轮清晰，机高 0.58 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-6ee1539d-2d90-486b-b4a7-a972b351bf75",
+      "taskId": "8462561",
+      "name": "洗衣折叠篮车",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795096234758.json",
+      "visualReview": "已人工目检，布袋开口向上，袋口固定在折叠管架内，推把与底部轮组完整。",
+      "reasons": []
+    },
+    {
+      "id": "asset-5d40a226-ef82-49e3-8985-693f583d94cf",
+      "taskId": "8464587",
+      "name": "浴缸龙头",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795096534666.json",
+      "visualReview": "已人工目检，落地法兰、弯管、双调节阀和手持花洒齐全，按落地款设计高度 0.95 米校准后，已重测放置与保存恢复。",
+      "reasons": []
+    },
+    {
+      "id": "asset-24e0730c-f979-4e6c-b4c6-4567e9423f7e",
+      "taskId": "8466153",
+      "name": "长型抽屉电视柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795096684595.json",
+      "visualReview": "已人工目检，长条柜顶平整，正面有抽屉和分隔柜门，矮脚贴地，柜宽 1.33 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-028aec05-705a-4311-bf37-b205e5b49a57",
+      "taskId": "8466464",
+      "name": "卧室梳妆凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795096878441.json",
+      "visualReview": "已人工目检，圆形软面坐垫由四条木脚支撑，凳面水平、轮廓完整，坐高 0.45 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-4c5b8d6e-fc03-4cce-bad7-e9e234fc8d71",
+      "taskId": "8467523",
+      "name": "阳台储物柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795097524026.json",
+      "visualReview": "已人工目检，上层开放搁板、下部双门储物柜和金属脚完整，0.30 米深度适合阳台沿墙摆放。",
+      "reasons": []
+    },
+    {
+      "id": "asset-0563aa25-65ed-401d-a655-0c97aca447ba",
+      "taskId": "8467974",
+      "name": "带门电视柜",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795097749729.json",
+      "visualReview": "已人工目检，柜体左右带门、中间设抽屉，金属支脚和柜顶完整，宽 1.05 米，深 0.33 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-3c2b1937-1e92-42a1-b53e-740eee53e748",
+      "taskId": "8469444",
+      "name": "厨房不锈钢单水槽",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098318747.json",
+      "visualReview": "已人工目检，不锈钢单槽与侧边沥水板连为一体，排水孔和台面翻边完整，开口朝上。",
+      "reasons": []
+    },
+    {
+      "id": "asset-b6961702-cbbb-4172-afdd-1bdb8595f805",
+      "taskId": "8469997",
+      "name": "卧室床尾凳",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098393835.json",
+      "visualReview": "已人工目检，长方形软垫、成对木脚和横撑完整，床尾凳坐高 0.45 米、长度 1.04 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-7b898701-8a18-4d77-8eee-5669683b95f6",
+      "taskId": "8469514",
+      "name": "陶瓷底座台灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098423124.json",
+      "visualReview": "已人工目检，圆润陶瓷灯座、开关、圆筒灯罩与电源插头完整，顶视可辨灯罩和线缆占地。",
+      "reasons": []
+    },
+    {
+      "id": "asset-f0d4c8e4-9707-4fb1-b564-c738ecd034d9",
+      "taskId": "8471140",
+      "name": "桌面显示器",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098798245.json",
+      "visualReview": "已人工目检，黑色屏幕、边框、中央立柱和底座完整，屏幕朝前，宽 0.61 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-20c8b241-f8c8-44db-9937-7c5f60b39b23",
+      "taskId": "8471249",
+      "name": "户外圆桌",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098827693.json",
+      "visualReview": "已人工目检，圆桌面水平，四条外张金属腿通过横撑相连，桌面直径约 0.82 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-46a0e2e4-4e67-43a5-a26c-075295ab8e98",
+      "taskId": "8471475",
+      "name": "电热水器",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098872718.json",
+      "visualReview": "已人工目检，卧式圆筒、端盖、安装件和下方控制组件完整，筒体长 0.80 米。",
+      "reasons": []
+    },
+    {
+      "id": "asset-308b8fa2-e37e-4a7e-807c-e301218ce95e",
+      "taskId": "8471520",
+      "name": "三脚架落地灯",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795098901997.json",
+      "visualReview": "已人工目检，三条木腿均匀撑开并连接圆筒灯罩，灯罩竖直，三脚占地与俯视图相符。",
+      "reasons": []
+    },
+    {
+      "id": "asset-cdd4f3db-ddb8-46e6-bd30-1900d7b2b291",
+      "taskId": "8472711",
+      "name": "台式咖啡机",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795099546188.json",
+      "visualReview": "已人工目检，台式咖啡机的出液口、蒸汽杆、托盘和底座清晰，摆放直立，俯视外轮廓和尺寸适合厨房台面。",
+      "reasons": []
+    },
+    {
+      "id": "asset-f02db55a-84e9-4b95-9db2-bdb6b356c964",
+      "taskId": "8473667",
+      "name": "壁挂装饰时钟",
+      "source": "lux3d_text",
+      "strictReady": true,
+      "scenePassed": true,
+      "sceneReport": "data/library/lux-qa/batch-1795099950325.json",
+      "visualReview": "已人工目检，圆形表盘直立，指针与时标可辨，俯视呈窄边，约 30 厘米宽、4 厘米厚，符合壁挂用途。",
+      "reasons": []
     }
   ]
 }

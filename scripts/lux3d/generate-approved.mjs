@@ -1,10 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { loadServerEnv } from '../../server/env.mjs';
+import { policy } from '../../server/lux3d/credit-policy.mjs';
 
 await loadServerEnv();
 const approvedCount = Number(process.env.APPROVED_GENERATION_COUNT || 1);
-const maxCredits = Number(process.env.LUX3D_MAX_CREDITS || 3600);
+const authorized = policy.openingBalance - policy.minimumBalance;
+const maxCredits = Math.min(authorized, Number(process.env.LUX3D_MAX_CREDITS || authorized));
 if (process.env.LUX3D_ALLOW_PAID_GENERATION !== 'true' || !Number.isInteger(approvedCount) || approvedCount < 1 || approvedCount > 3 || !Number.isFinite(maxCredits) || maxCredits <= 0) {
   console.error('需要 LUX3D_ALLOW_PAID_GENERATION=true、APPROVED_GENERATION_COUNT=1..3，以及有效的 LUX3D_MAX_CREDITS 额度上限。');
   process.exit(2);

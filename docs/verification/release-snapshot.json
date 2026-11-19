@@ -1,14 +1,14 @@
 {
-  "capturedAt": "2026-11-19T11:06:16.502992+00:00",
-  "models": 198,
+  "capturedAt": "2026-11-19T14:54:00.286175+00:00",
+  "models": 254,
   "materials": 69,
-  "planThumbnails": 198,
-  "indexSHA256": "b6d353ad2aecf548998fd4715f2444763d80aa9d0011e906e268f144151a9241",
-  "creditReservationsSHA256": "fa58580bc6f32da114186a90a411004477fbfad85ff7d56c5176e38d957dded2",
-  "creditCsvSHA256": "4fcc231f24d728bdd5beadf45eca9393e9c9252f7a690bb3bf8c222e79f5a30e",
-  "reservedTasks": 90,
-  "lux3dArchived": 84,
-  "lux3dStrictReady": 48,
-  "reviewSHA256": "501eb071701fd261cc4d969bb0402cdba855b72b5b570a6e48679fa33e84191c",
-  "licenseCsvSHA256": "8487a205e1318d7678215326142338cc359c44fbe6bd4623d2c7dbb92bf94b32"
+  "planThumbnails": 254,
+  "indexSHA256": "03f1bb0a55eed4889e6c96463ed355fc339cf9b49d1fda2345a6f9403bfe6d3a",
+  "creditReservationsSHA256": "970acabd2610b1daeeedbb616d31540a7c9b98d310ae6b69032aa4ce25376701",
+  "creditCsvSHA256": "d9bdfc2424023ce5e999120d2d4d60facd6eeabc1f101af88e1ad149fa74bcca",
+  "reservedTasks": 175,
+  "lux3dArchived": 140,
+  "lux3dStrictReady": 112,
+  "reviewSHA256": "e020c5ce8c9e45ff8816a79ede62f5dc0399037ac09bd4bb9710a5455488f0dd",
+  "licenseCsvSHA256": "cf28499ad1df77c2079cf3a6984352e57276d17c88500e312380f88b12786c72"
 }

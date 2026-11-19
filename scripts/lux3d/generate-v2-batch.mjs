@@ -3,6 +3,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { Lux3DProvider } from '../../src/providers/lux3d/node-provider.js';
 import { loadServerEnv } from '../../server/env.mjs';
+import { reserveCredits } from '../../server/lux3d/credit-policy.mjs';
 await loadServerEnv();
 const root = path.resolve('data', 'lux3d-v2');
 await fs.mkdir(root, { recursive: true });
@@ -34,11 +35,9 @@ try {
     if (entries.some((e) => e.status !== 'archived')) throw new Error('存在结果不明或未归档任务，需要核对账单');
   }
   const pending = catalog.filter((item) => !entries.some((e) => e.name === item.name));
-  if (entries.reduce((sum, e) => sum + (Number(e.frozenCredits) || 0), 0) + pending.length * 20 > 3540) throw new Error('冻结额度达到项目授权上限');
-  for (const item of pending) entries.push({ name: item.name, expectedCredits: 20, actualCredits: null, frozenCredits: 20, status: 'reserved', createdAt: new Date().toISOString() });
-  await write();
   for (const item of pending) {
-    const entry = entries.find((e) => e.name === item.name);
+    const entry = await reserveCredits(entries, item.name);
+    await write();
     try {
       const taskId = await provider.createTextJob({ prompt: item.prompt, version: 'G1', faceCount: 60000 });
       entry.taskId = String(taskId); entry.status = 'submitted'; await write();

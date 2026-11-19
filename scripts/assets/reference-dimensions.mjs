@@ -1,5 +1,14 @@
 // Design references for preview placement, not measured manufacturer sizes.
 const rules = [
+ [/桌面显示器/,0,.61], [/电热水器/,0,.80], [/轨道射灯组件/,0,.88], [/陶瓷落地花瓶/,1,.62], [/陶瓷桌面花瓶/,1,.27],
+ [/木栏婴儿床/,1,0.95], [/儿童高脚餐椅/,1,0.92], [/折叠熨衣板/,1,0.88], [/折叠行李架/,1,0.52], [/落地衣帽架/,1,1.7], [/落地取暖片/,1,0.63], [/电钢琴/,0,1.35], [/双人琴凳/,1,0.49], [/三脚画架/,1,1.55], [/圆筒脚踏垃圾桶/,1,0.49], [/分层报刊架/,1,1.12], [/软木公告板/,0,0.72], [/洗衣折叠篮车/,1,0.72], [/无靠背弧形换鞋长凳/,1,0.44], [/立式除湿机/,1,0.58],
+ [/圆形浴室镜/,0,.70], [/厨房烤箱高柜/,1,2.1], [/简约壁灯|床头阅读壁灯/,1,.30],
+ [/壁挂空调/,0,.88], [/阳台洗衣柜/,1,.90], [/浴室花洒套装/,1,1.12],
+ [/衣柜/,1,2.1], [/落地空调/,1,1.72], [/书桌夹灯/,1,.38],
+ [/桌面键盘/,0,.44], [/浴缸龙头/,1,.95], [/厨房抽拉水龙头/,1,.38], [/嵌入式浴缸/,0,1.65],
+ [/书房小边柜/,1,.65], [/台式电脑机箱/,1,.43], [/带门电视柜|窄型电视柜|长型抽屉电视柜/,1,.52],
+ [/卧室梳妆凳/,1,.45], [/小型桌面盆栽/,1,.28], [/卧室储物箱/,1,.38], [/高脚吧椅|靠背吧椅/,1,1.0],
+
  [/窗帘/,1,2.4], [/平板电视/,0,1.2],
  [/单人床1\.2/,0,1.2], [/双人床1\.5/,0,1.5], [/双人床1\.8/,0,1.8], [/双人床|储物床/,0,1.8], [/床头靠垫|抱枕|靠垫/,0,.45], [/高凳/,1,.75], [/长凳/,1,.45], [/床头柜/,1,.55], [/床尾凳|换鞋凳/,1,.45],
  [/单人.*沙发|单人.*椅|休闲椅|躺椅|餐椅|办公椅|转椅|网布.*椅/,1,.85], [/吧椅/,1,1.0], [/L形.*沙发|转角沙发|模块沙发/,0,2.6], [/沙发/,0,2.0], [/脚踏凳|脚凳|淋浴凳|梳妆凳/,1,.45],
@@ -11,16 +20,25 @@ const rules = [
  [/落地阅读灯|落地灯/,1,1.55], [/台灯|夹灯/,1,.45], [/吊灯/,1,.55], [/长条.*吸顶灯/,0,1.0], [/吸顶灯|筒灯|射灯|壁灯/,0,.3], [/地毯/,0,1.8], [/门垫/,0,.75], [/盆栽/,1,.7], [/花瓶/,1,.3], [/装饰画/,1,.6], [/时钟/,0,.3], [/水槽|燃气灶|电磁灶/,0,.7], [/书立/,1,.3], [/推车/,1,.9]
 ];
 const ranges = [[.02,4.5],[.02,3],[.02,4.5]];
-export function referenceDimensions(name, category, bounds) {
+export function referenceDimensions(name, category, bounds, referenceSource) {
  const values=bounds.max.map((v,i)=>v-bounds.min[i]);
  if(values.some(v=>!Number.isFinite(v)||v<=0)) return {error:'模型包围盒无效'};
+ const museum=referenceSource?.referenceMeters;
+ if (museum && ['width','height','depth'].every(key=>Number.isFinite(museum[key]) && museum[key]>0)) {
+   const scale=museum.height/values[1];
+   const measured={width:values[0]*scale,height:museum.height,depth:values[2]*scale};
+   const deviations=['width','depth'].filter(key=>Math.abs(measured[key]/museum[key]-1)>.25);
+   const exceptions=deviations.map(key=>'生成模型的'+({width:'宽',depth:'深'})[key]+'与馆藏尺寸相差超过 25%');
+   const dimensions=Object.fromEntries(Object.entries(measured).map(([key,value])=>[key,{value:Number(value.toFixed(4)),unit:'m',source:'estimated'}]));
+   return {dimensions,exceptions,reference:{label:'按馆藏实物高度等比换算',source:referenceSource.sourceUrl,anchorAxis:'height',anchorMeters:museum.height,rawBounds:bounds,rawSize:values,computedSize:measured,museumDimensions:museum,exceptions}};
+ }
  const rule=rules.find(([re])=>re.test(name));
  if(!rule)return {error:`${name} 暂无设计参考尺寸规则`,bounds};
  const [,axis,target]=rule,scale=target/values[axis],dims=values.map(v=>v*scale);
  const exceptions=dims.flatMap((v,i)=>v<ranges[i][0]||v>ranges[i][1]?[`${['宽','高','深'][i]} ${v.toFixed(3)}m 超出通用检查范围`]:[]);
  if(!/地毯|门垫/.test(name) && Math.max(...dims)/Math.min(...dims)>40)exceptions.push('长宽高比例异常，需单独核对');
  if(!/抱枕|靠垫/.test(name) && /沙发|椅|躺椅/.test(name) && (dims[1] < .35 || dims[1] > 1.5)) exceptions.push('座椅高度偏离设计参考范围');
- if(/床(?!头|尾)/.test(name) && (dims[2] < 1.8 || dims[2] > 2.8 || dims[1] > 1.8)) exceptions.push('床体深度或高度偏离设计参考范围');
+ if(!/婴儿床/.test(name) && /床(?!头|尾)/.test(name) && (dims[2] < 1.8 || dims[2] > 2.8 || dims[1] > 1.8)) exceptions.push('床体深度或高度偏离设计参考范围');
  if(/吸顶灯/.test(name) && dims[1] > Math.max(dims[0],dims[2]) * .5) exceptions.push('吸顶灯可能竖立，需核对轴向');
  if(/地毯|门垫/.test(name) && dims[1] > .1) exceptions.push('地毯竖向高度异常，需核对轴向');
  if(/冰箱|洗衣机|烘干机/.test(name) && (dims[0] < .3 || dims[2] < .25 || dims[0] > 2.5 || dims[2] > 2.0)) exceptions.push('家电宽深偏离设计参考范围');

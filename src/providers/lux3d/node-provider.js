@@ -28,12 +28,14 @@ export class Lux3DProvider {
     return createLux3dClient({ region: this.env.AHOLO_REGION || 'cn', apiKey: this.env.AHOLO_API_KEY });
   }
 
-  async createImageJob({ filePath, version = 'G1', faceCount = 60_000 }) {
-    return this.client().imgTo3d.createFromFile(filePath, { version, faceCount, outputFormat: ['glb'], aiPredictSize: false });
+  async createImageJob({ filePath, version = 'G1', faceCount = 60_000, quoteId }) {
+    const body = {version,faceCount,outputFormat:['glb'],aiPredictSize:false,...(quoteId ? {content_id:quoteId} : {})};
+    const images = this.client().imgTo3d;
+    return images.createFromFile(filePath,body);
   }
 
-  async createTextJob({ prompt, version = 'G1', faceCount = 60_000 }) {
-    return this.client().textTo3d.create({ prompt, version, faceCount, outputFormat: ['glb'], aiPredictSize: false });
+  async createTextJob({ prompt, version = 'G1', faceCount = 60_000, quoteId }) {
+    return this.client().textTo3d.create({ prompt, version, faceCount, outputFormat: ['glb'], aiPredictSize: false, ...(quoteId ? {content_id:quoteId} : {}) });
   }
 
   async getJob(taskId) {
