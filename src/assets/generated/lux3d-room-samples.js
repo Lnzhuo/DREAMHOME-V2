@@ -15,7 +15,7 @@ export const LUX3D_ROOM_SAMPLES = [
     {taskId:'8426568',position:[2.1,2.75,2.9]},
   ]},
   { id:'lux-bathroom', name:'Lux3D 卫浴空间', roomType:'bathroom', items:[
-    {taskId:'8423649',position:[.75,0,.85]}, {taskId:'8422654',position:[1.8,0,1.0]},
+    {assetId:'kenney-shower',position:[.75,0,.85]}, {assetId:'kenney-toilet',position:[1.8,0,1.0]},
     {taskId:'8423648',position:[1.8,0,2.25]}, {taskId:'8426568',position:[1.2,2.75,1.5]},
   ]},
   { id:'lux-kitchen', name:'Lux3D 现代厨房', roomType:'kitchen', items:[
@@ -47,7 +47,7 @@ export function createLux3dRoomSample(sampleId, catalogAssets) {
   for (const [index, item] of sample.items.entries()) {
     const asset = catalogAssets.find(entry => item.assetId ? entry.id === item.assetId : String(entry.providerTaskId) === item.taskId);
     const key = item.assetId || item.taskId;
-    if (!asset || !asset.thumbnailUrl || !asset.qa?.placementTest?.startsWith('通过') || asset.scaleCalibrationRequired || !asset.qa?.visualReview || /待|需复核|需单独校准|瑕疵|异常|差异|不可拆|不可分|不能独立|额外支架|疑似重复|细节较浅/.test(asset.qa.visualReview)) { missing.push(key); continue; }
+    if (!asset || !asset.thumbnailUrl || !asset.qa?.placementTest?.startsWith('通过') || asset.scaleCalibrationRequired || !asset.qa?.visualReview || /待|需复核|需单独校准|瑕疵|异常|差异|不可拆|不可分|不能独立|额外支架|疑似重复|细节较浅|未目检|未人工|未审核|未复核|未验收/.test(asset.qa.visualReview)) { missing.push(key); continue; }
     if (!doc.assets.some(entry => entry.id === asset.id)) doc.assets.push(structuredClone(asset));
     doc.placements.push({ id: `sample-placement-${key}-${index}`, assetId: asset.id, containerId: room.id,
       position: { x:item.position[0], y:item.position[1], z:item.position[2] }, rotation:{x:0,y:item.rotationY||0,z:0}, scale:{x:1,y:1,z:1}, locked:false, visible:true });

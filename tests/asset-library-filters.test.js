@@ -7,3 +7,7 @@ test('尺寸或轴向异常不列为推荐，用户校准只解除尺寸警示',
 test('严格报告的缺陷词和待审核不能进入推荐',()=>{for(const word of ['不可拆','不可分','不能独立','需单独校准','额外支架','疑似重复','细节较浅','待人工检查'])assert.equal(requiresReview({qa:{visualReview:`已目检：${word}`,placementTest:'通过：回归'}}),true,word)});
 
 test('没有 QA 记录的 Lux3D 模型不能视作已验收',()=>{assert(requiresReview({provider:'aholo-lux3d',source:'lux3d_image'}));});
+
+test('缺少 QA 的外部库资产不冒充已验收',()=>{assert(requiresReview({source:'licensed_library',provider:'polyhaven'}));assert(!requiresReview({source:'user_upload'}));});
+
+test('场景通过但未完成目检的模型不进入推荐',()=>{assert(requiresReview({provider:'aholo-lux3d',qa:{placementTest:'通过：回归'}}));assert(requiresReview({provider:'aholo-lux3d',qa:{placementTest:'通过：回归',visualReview:'未目检'}}));});

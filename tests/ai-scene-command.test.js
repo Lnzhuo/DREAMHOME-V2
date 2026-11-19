@@ -86,3 +86,76 @@ test('library assets and materials are validated and applied to individual place
   const invalid=structuredClone(plan); invalid.commands[1].materialId='unknown';
   assert.equal(executor.preview(invalid).canApply,false);
 });
+
+function crowdedScene() {
+  const scene=createDemoSceneDocument();
+  const rooms=scene.buildings[0].floors[0].rooms;
+  rooms[0].name='客厅';
+  rooms.push({...structuredClone(rooms[0]),id:'room-study',name:'书房'});
+  const sample=scene.placements[0];
+  scene.placements=Array.from({length:120},(_,i)=>({...structuredClone(sample),id:'instance-'+i,assetId:i===118?'lamp':'mug',containerId:i===118?'room-study':rooms[0].id}));
+  return scene;
+}
+
+async function crowdedReply(message,{plan,selection,image,scene=crowdedScene()}={}) {
+  let sent;
+  const result=await generateSceneCommand({sceneDocument:scene,message,selection:selection || {roomId:'room-memory',placementId:'instance-119'},image,
+    env:{LLM_API_KEY:'test',LLM_BASE_URL:'https://example.invalid',LLM_MODEL:'test'},
+    fetchImpl:async(_url,options)=>{
+      const body=JSON.parse(options.body);
+      sent=JSON.parse(body.messages[0].content.split('上下文：').at(-1));
+      return {ok:true,json:async()=>({choices:[{message:{content:JSON.stringify(plan || {...movePlan(),commands:[]})}}]})};
+    }});
+  return {result,sent};
+}
+
+test('crowded home keeps the selected tail placement and limits image context',async()=>{
+  const plan={...movePlan(),commands:[{type:'move_asset',placementId:'instance-119',offset:{x:0.2,y:0,z:0}}]};
+  const {result,sent}=await crowdedReply('把选中的家具向右移动20厘米',{plan,image:'data:image/png;base64,AAAA'});
+  assert.equal(sent.selectedFurniture,'instance-119');
+  assert.equal(sent.placements[0].id,'instance-119');
+  assert.ok(sent.placements.length<=7 && !sent.placements.some(p=>p.id==='instance-118'));
+  assert.equal(result.commands[0].placementId,'instance-119');
+  assert.match(result.warnings.join(),/7\/120/);
+});
+
+test('explicit remote room wins over current selection and a previous whole-home request',async()=>{
+  const {sent,result}=await crowdedReply('先前要求：调整全屋。\n助手对该要求的提问：请确定范围\n用户的新回复：先把书房的灯改成蓝色',
+    {plan:{...movePlan(),commands:[{type:'set_material',targetId:'instance-118',color:'#174a9f'}]}});
+  assert.deepEqual(sent.placements.map(x=>x.id),['instance-118']);
+  assert.equal(sent.selectedFurniture,undefined);
+  assert.deepEqual(sent.rooms.map(r=>r.id),['room-study']);
+  assert.equal(result.commands[0].targetId,'instance-118');
+});
+
+test('whole-house and oversize room batches ask for a scope before contacting the provider',async()=>{
+  for(const request of ['把全屋家具统一改成蓝色','所有茶杯向右移20厘米','把客厅所有的杯子移动到右边','先前要求：移动全屋家具。\n助手对该要求的提问：请选定一个房间。\n用户的新回复：确认']){
+    const {sent,result}=await crowdedReply(request);
+    assert.equal(sent,undefined);
+    assert.deepEqual(result.commands,[]);
+    assert.ok(result.questions.length && result.requiresConfirmation);
+  }
+});
+
+test('a short confirmation retains a previously named remote room',async()=>{
+  const {sent}=await crowdedReply('先前要求：书房台灯改蓝色。\n助手对该要求的提问：确认这个颜色吗？\n用户的新回复：确认这个颜色，请给出方案。');
+  assert.deepEqual(sent.rooms.map(r=>r.id),['room-study']);
+  assert.equal(sent.selectedFurniture,undefined);
+});
+
+test('a real but omitted item or shared asset cannot be substituted for selected furniture',async()=>{
+  for(const targetId of ['instance-118','instance-0','mug']){
+    const {result}=await crowdedReply('仅将选中的家具改成蓝色',{plan:{...movePlan(),commands:[{type:'set_material',targetId,color:'#174a9f'}]}});
+    assert.deepEqual(result.commands,[]);
+    assert.ok(result.questions.length);
+  }
+});
+
+test('a regular 34-piece text request keeps its full original scene',async()=>{
+  const scene=crowdedScene();
+  scene.placements=scene.placements.slice(0,34);
+  const {sent,result}=await crowdedReply('看一下客厅',{scene});
+  assert.equal(sent.placements.length,34);
+  assert.equal(sent.scope,undefined);
+  assert.deepEqual(result.warnings,[]);
+});

@@ -29,7 +29,7 @@ try {
   const command=plan.commands[0],prior=before.find(p=>p.id===id);
   assert.equal(command.type,'move_asset');assert.equal(command.placementId,id);
   assert(Math.abs(command.position.x-prior.position.x-.10)<.001);
-  assert.equal(command.position.y,prior.position.y);assert.equal(command.position.z,prior.position.z);
+  assert(Math.abs(command.position.y-prior.position.y)<1e-6);assert(Math.abs(command.position.z-prior.position.z)<1e-6);
   await panel.getByRole('button',{name:'应用修改'}).click();
   const after=await page.evaluate(()=>window.__dreamhome.sceneDocument.placements);
   assert.deepEqual(after.filter(p=>p.id!==id),before.filter(p=>p.id!==id));

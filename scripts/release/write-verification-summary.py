@@ -99,6 +99,8 @@ with (docs/'LUX3D_CREDIT_LEDGER.csv').open(encoding='utf-8-sig',newline='') as f
 recorded=sum(int(r['实际积分']) for r in ledger if r.get('taskId') and (r.get('实际积分') or '').isdigit())
 reservations=read(root/'data/lux3d-v2/reservations.json')
 frozen=sum(r.get('frozenCredits',0) or 0 for r in reservations)
+apartment_proof=read(docs/'verification/v2/residence/apartment-ai.json') if (docs/'verification/v2/residence/apartment-ai.json').exists() else {}
+apartment_text=(f"在 {apartment_proof['placed']} 件家具的整套住宅中，选中茶几右移 10 厘米，逐件比对其余 {apartment_proof['othersUnchanged']} 件，撤销后恢复原坐标。" if apartment_proof.get('undoRestored') and not apartment_proof.get('pageErrors') else '此快照尚无整套住宅的独立推理验收记录。')
 def write(name,body): (docs/name).write_text(body.strip()+'\n',encoding='utf-8')
 write('DREAMHOME_V2_ACCEPTANCE.md',f"""# DREAMHOME V2 验收记录
 
@@ -113,6 +115,7 @@ write('DREAMHOME_V2_ACCEPTANCE.md',f"""# DREAMHOME V2 验收记录
 | 外观与材料 | 家具实例、墙和地板应用材质并保存在项目中 | verification/v2/browser-checks.json；data/library/material-drag-e2e.json |
 | 模型落地 | 快照目录中 {checked_ground}/{len(assets)} 件已取得实际顶点落地记录；容差 {floor_checks.get('toleranceMeters',0):.3f} 米 | data/library/vertex-floor-e2e.json |
 | 已布置全套住宅 | {named['residence']['placements']} 件摆放、{named['residence']['lux3dPlacements']} 个 Lux3D 实例，在新浏览器会话从分享文件恢复 {named['restored']} 件 | verification/v2/residence/residence-checks.json |
+| 整套住宅的本机 AI | {apartment_text} | verification/v2/residence/apartment-ai.json |
 | AI 修改 | {ai_text} | verification/v2/local-ai/ai-e2e.json |
 | 用户凭据 | 设置界面可填写 Aholo 和 LLM；实测平台只读鉴权，会话隔离与删除由测试覆盖 | verification/v2/05-service-settings.png；tests/byok-security.test.js |
 | 多项目与离线分享 | 上传 GLB、每层校准底图、跨会话导出导入、恢复 Phase 3 旧设计 | verification/v2/audit-portability.json |
@@ -158,7 +161,7 @@ write('DREAMHOME_V2_FINAL_REPORT.md',f"""# DREAMHOME V2 交付说明
 
 原授权总额 3600。该次快照的任务级费用列合计 {recorded} 积分，新增任务保守冻结 {frozen} 积分，两者不能相加。失败任务可能发生退费，不明提交保留冻结且不重试。余额取有时间戳的账户用量页记录，未证实的实时余额保留为空。完整账本见 LUX3D_CREDIT_LEDGER.csv。
 
-{ai_text} Aholo 与 LLM 用户凭据分别在设置里配置，服务端加密保存在当前会话；导出的设计、截图及发行包不带平台密钥。
+{ai_text} {apartment_text} Aholo 与 LLM 用户凭据分别在设置里配置，服务端加密保存在当前会话；导出的设计、截图及发行包不带平台密钥。
 
 ## 源码与复核
 
