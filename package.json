@@ -1,0 +1,28 @@
+{
+  "name": "dreamhome-studio",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "DREAMHOME · 可编辑的住宅、家具与材料设计工作室",
+  "scripts": {
+    "dev": "node server/index.mjs --dev",
+    "dev:vite": "vite",
+    "start": "node server/index.mjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate": "node scripts/generate-assets.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "@manycore/aholo-sdk-asset": "^1.4.0",
+    "@manycore/aholo-sdk-lux3d": "^1.10.0",
+    "playwright-core": "^1.65.1",
+    "vite": "^8.3.8"
+  }
+}

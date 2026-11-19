@@ -1,0 +1,151 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { chromium } from 'playwright-core';
+import { createDemoSceneDocument } from '../../src/data/demo-scene.js';
+
+const base = process.env.DEMO_URL || 'http://127.0.0.1:4193';
+const evidenceDir = path.resolve(process.env.DEMO_OUTPUT || 'docs/verification/v2');
+const temp = await fs.mkdtemp(path.join(os.tmpdir(), 'dreamhome-import-'));
+await fs.mkdir(evidenceDir, {recursive:true});
+const browser = await chromium.launch({channel:'msedge', args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const evidence={date:new Date().toISOString(),checks:[],errors:[]};
+const mark = text => { evidence.checks.push(text); console.log(text); };
+async function fresh() {
+  const context = await browser.newContext({viewport:{width:1440,height:960}});
+  const p = await context.newPage();
+  p.setDefaultTimeout(25000);
+  p.on('pageerror',e=>evidence.errors.push(e.message));
+  await p.goto(base);
+  return p;
+}
+const ready=p=>p.waitForFunction(()=>!!window.__dreamhome);
+const view=p=>p.locator('[data-view="2d"]').click();
+const ref=p=>p.locator('.dh-reference-panel');
+const map=p=>p.locator('.dh-floorplan-svg');
+const roomOn=(p,num,count)=>p.locator('.dh-space-item').nth((num-1)*count).click();
+async function addReference(p,file,width) {
+  await ref(p).locator('[data-width]').fill(String(width));
+  await ref(p).locator('input[type=file]').setInputFiles(file);
+  await map(p).locator('image[data-reference-plan]').waitFor();
+  assert.equal(await map(p).locator('image[data-reference-plan]').getAttribute('width'),String(width));
+}
+try {
+  const p=await fresh();
+  await p.locator('[data-mode=villa] button').nth(1).click(); await ready(p);
+  const source = action=>p.locator('[data-action="'+action+'-filter"]');
+  await source('lux').click();
+  assert(await p.locator('[data-asset-id="asset-4afeba6d-df1c-4ae6-aaac-91d8bb781133"]').count());
+  assert.equal(await p.locator('.dh-asset-card[data-asset-id^="polyhaven-"]').count(),0);
+  await source('image').click();
+  const photoAsset=p.locator('[data-asset-id="asset-41a51341-6a6b-4c6b-a080-090b2690b159"]');
+  await photoAsset.getByText('预览模型').click();
+  const comparison=p.locator('.dh-preview-modal');
+  await comparison.locator('canvas').waitFor();
+  await p.waitForFunction(()=>Array.from(document.querySelectorAll('.dh-preview-modal img')).some(img=>img.complete && img.naturalWidth>0));
+  await comparison.locator('.dh-preview-close').click();
+  await source('all').click();
+  assert((await p.locator('.dh-asset-card[data-asset-id^="polyhaven-"]').count())>0);
+  mark('独立包的原创、图生和全部资源筛选；原始照片与可旋转模型对照');
+  await view(p);
+  const count=await p.evaluate(()=>window.__dreamhome.sceneDocument.buildings[0].floors[0].rooms.length);
+  assert.equal(await map(p).locator('[data-outdoor-zone=courtyard-01]').count(),1);
+  assert.equal(await map(p).locator('[data-outdoor-zone]').count(),5);
+  assert.equal(await map(p).locator('[data-stair=up] line').count(),13);
+  assert.equal(await map(p).locator('[data-stair=opening]').count(),0);
+  await ref(p).locator('summary').click();
+  await addReference(p,'public/room-references/corner-windows.jpg',10);
+  const initialCenter=await map(p).locator('image[data-reference-plan]').getAttribute('y');
+  const indoorBounds=await p.evaluate(()=>{const rooms=window.__dreamhome.sceneDocument.buildings[0].floors[0].rooms;const ys=rooms.flatMap(r=>r.boundary.map(p=>p.y));return (Math.min(...ys)+Math.max(...ys))/2;});
+  const imageHeight=Number(await map(p).locator('image[data-reference-plan]').getAttribute('height'));
+  assert(Math.abs(Number(initialCenter)+imageHeight/2-indoorBounds)<1e-6);
+  await p.screenshot({path:path.join(evidenceDir,'portable-villa-ground.png')});
+  await roomOn(p,2,count);
+  assert.equal(await map(p).locator('[data-stair=up]').count(),1);
+  assert.equal(await map(p).locator('[data-stair=opening]').count(),1);
+  assert.equal(await map(p).locator('[data-outdoor-zone],image[data-reference-plan]').count(),0);
+  await addReference(p,'public/room-references/kitchen-cc0.jpg',12);
+  await p.locator('[data-action=glb]').setInputFiles('tests/fixtures/upload-mug-test.glb');
+  await p.locator('[data-field=asset-search]').fill('upload-mug-test');
+  await p.locator('.dh-asset-card').getByText('放入房间').click();
+  await p.waitForFunction(()=>window.__dreamhome.sceneDocument.placements.length===1 &&
+    Object.values(window.__dreamhome.game.placementGroups).some(g=>g.userData.hasRealModel));
+  const before=await p.evaluate(()=>window.__dreamhome.sceneDocument.placements[0]);
+  assert(before.containerId.startsWith('level-2'));
+  await p.locator('[data-action=save]').click();
+  await p.waitForFunction(()=>document.querySelector('.dh-save-state')?.textContent.includes('快照'));
+  await p.reload(); await ready(p); await view(p);
+  await map(p).locator('image[data-reference-plan]').waitFor();
+  assert.equal(await map(p).locator('image[data-reference-plan]').getAttribute('width'),'10');
+  await roomOn(p,2,count); await map(p).locator('image[data-reference-plan]').waitFor();
+  assert.equal(await map(p).locator('image[data-reference-plan]').getAttribute('width'),'12');
+  mark('三层楼梯上下行和庭院分层投影；室内校准中心稳定；10/12 米两层底图与本地 GLB 刷新恢复');
+  await p.locator('.dh-files summary').click();
+  const downloadPromise=p.waitForEvent('download');
+  await p.locator('[data-action=export]').click();
+  const download=await downloadPromise;
+  const designFile=path.join(temp,'villa.dreamhome');
+  await download.saveAs(designFile);
+  await p.context().close();
+  const q=await fresh();await q.locator('[data-mode=room] button').first().click();await ready(q);
+  await q.locator('[data-action=import]').setInputFiles(designFile);
+  await q.waitForFunction(()=>window.__dreamhome.sceneDocument.referencePlans?.['floor-2']?.width===12);
+  await q.waitForFunction(()=>Object.values(window.__dreamhome.game.placementGroups).some(g=>g.userData.hasRealModel));
+  const restored=await q.evaluate(()=>window.__dreamhome.sceneDocument.placements[0]);
+  assert.notEqual(restored.assetId,before.assetId);assert.deepEqual(restored.position,before.position);assert.equal(restored.containerId,before.containerId);
+  await view(q);await roomOn(q,2,count);await map(q).locator('image[data-reference-plan]').waitFor();
+  assert.equal(await map(q).locator('image[data-reference-plan]').getAttribute('width'),'12');
+  await roomOn(q,3,count);
+  assert.equal(await map(q).locator('[data-stair=opening]').count(),1);
+  assert.equal(await map(q).locator('[data-stair=up],[data-outdoor-zone],image[data-reference-plan]').count(),0);
+  mark('全新浏览器会话导入：用户 GLB 和楼层恢复，二层底图独立、三层只有楼板洞口');
+  await roomOn(q,1,count);
+  await map(q).locator('[data-outdoor-zone="courtyard-01-terrace"]').click();
+  await q.getByRole('button',{name:'手动调整',exact:true}).click();
+  await q.locator('[data-place-outdoor="polyhaven-outdoor-table-chair-set-01"]').click();
+  await q.locator('[data-place-outdoor="polyhaven-potted-plant-01"]').click();
+  await q.waitForFunction(()=>window.__dreamhome.sceneDocument.placements.length===3 &&
+    Object.values(window.__dreamhome.game.placementGroups).every(g=>g.userData.hasRealModel));
+  assert.equal(await q.evaluate(()=>window.__dreamhome.game.activeRoomId),'courtyard-01-terrace');
+  const terraceForm=q.locator('[data-site-zone=terrace]');
+  await terraceForm.locator('[name=width]').fill('4.2');await terraceForm.getByText('应用分区').click();
+  const site=q.locator('form[data-fence]');
+  await site.locator('[name=gate]').fill('3');await site.getByText('应用围栏').click();
+  await q.locator('[data-exterior]').click();
+  await q.waitForFunction(()=>window.__dreamhome.game.exteriorRoofs.some(n=>n.visible && n.name.startsWith('roof:')));
+  await q.waitForFunction(()=>!window.__dreamhome.game.tween);
+  await q.screenshot({path:path.join(evidenceDir,'portable-villa-exterior.png')});
+  const roof=q.locator('[data-roof]');
+  await roof.locator('[name=enabled]').uncheck();await roof.getByText('应用屋顶').click();
+  await q.waitForFunction(()=>!window.__dreamhome.game.exteriorRoofs.some(n=>n.name.startsWith('roof:')));
+  await roof.locator('[name=enabled]').check();await roof.locator('[name=rise]').fill('1.6');await roof.getByText('应用屋顶').click();
+  await q.locator('[data-view=walk]').click();
+  await q.waitForFunction(()=>window.__dreamhome.game.exteriorRoofs.every(n=>!n.visible));
+  await q.locator('[data-action=save]').click();
+  await q.waitForFunction(()=>document.querySelector('.dh-save-state')?.textContent.includes('快照'));
+  await q.reload();await ready(q);await view(q);
+  await q.waitForFunction(()=>Object.values(window.__dreamhome.game.placementGroups).length===3 &&
+    Object.values(window.__dreamhome.game.placementGroups).every(g=>g.userData.hasRealModel));
+  const siteData=await q.evaluate(()=>{const d=window.__dreamhome.sceneDocument;return {
+    roof:d.buildings[0].roof.rise,gate:d.outdoorZones[0].fence.gateWidth,
+    assets:d.placements.filter(p=>p.containerId==='courtyard-01-terrace').map(p=>p.assetId).sort()
+  };});
+  assert.equal(siteData.roof,1.6);assert.equal(siteData.gate,3);
+  assert.deepEqual(siteData.assets,['polyhaven-outdoor-table-chair-set-01','polyhaven-potted-plant-01']);
+  assert.equal(await map(q).locator('[data-placement-id]').count(),2);
+  assert.equal(await map(q).locator('image[href$="/plan.png"]').count(),2);
+  mark('地面分区选择、露台尺寸、围栏入口、坡屋顶显隐与高度、真实户外桌椅和盆栽放置及刷新恢复');
+  const old=createDemoSceneDocument();old.name='旧版客厅验收';old.updatedAt='2099-01-01T00:00:00.000Z';
+  await q.evaluate(doc=>new Promise((resolve,reject)=>{const request=indexedDB.open('dreamhome');request.onsuccess=()=>{const db=request.result;const tx=db.transaction('projects','readwrite');tx.objectStore('projects').put(doc);tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>reject(tx.error);};}),old);
+  await q.reload();await ready(q);assert.equal(await q.evaluate(()=>window.__dreamhome.sceneDocument.name),old.name);
+  assert.deepEqual(await q.evaluate(()=>window.__dreamhome.sceneDocument.placements),old.placements);
+  await view(q);assert.equal(await map(q).locator('[data-placement-id]').count(),old.placements.length);
+  mark('Phase 3 IndexedDB 存档直接打开；全部旧实例、坐标、旋转、缩放与平面图恢复');
+  assert.deepEqual(evidence.errors,[]); evidence.passed=true;
+} finally {
+  await fs.writeFile(path.join(evidenceDir,'portable-browser.json'),JSON.stringify(evidence,null,2));
+  await browser.close();
+  await fs.rm(path.join(temp,'villa.dreamhome'),{force:true});
+  await fs.rmdir(temp);
+}

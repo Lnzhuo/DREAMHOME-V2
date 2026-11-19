@@ -1,0 +1,2 @@
+import fs from 'node:fs/promises';import crypto from 'node:crypto';import path from 'node:path';
+const source=path.resolve('data/library/index.json'),bytes=await fs.readFile(source);JSON.parse(bytes);const digest=crypto.createHash('sha256').update(bytes).digest('hex'),dir=path.resolve('data/library/snapshots');await fs.mkdir(dir,{recursive:true});const output=path.join(dir,`catalog-${Date.now()}-${digest.slice(0,12)}.json`);await fs.writeFile(output,bytes,{flag:'wx'});console.log(JSON.stringify({snapshot:output,sha256:digest}));

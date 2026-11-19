@@ -1,0 +1,20 @@
+.dw-room-editor { padding:4px; color:#39372f; background:#fbfaf7; }
+.dw-room-editor h3 { font-size:16px; margin:4px 0 14px; }
+.dw-room-editor h4 { font-size:14px; margin:20px 0 8px; }
+.dw-room-editor label { display:grid; grid-template-columns:minmax(0,1fr) minmax(72px,1fr); align-items:center; gap:8px; color:#625d54; font-size:12px; }
+.dw-room-editor input,.dw-room-editor select { box-sizing:border-box; width:100%; min-width:0; padding:8px; border:1px solid #ddd6cc; border-radius:7px; color:#35342d; background:#fff; }
+.dw-room-editor button { padding:8px 10px; border:1px solid #d7c4ac; border-radius:7px; background:#f5eee4; color:#735536; cursor:pointer; }
+.dw-room-editor button:disabled { opacity:.45; cursor:default; }
+.dw-room-editor [data-area] { display:grid; gap:8px; }
+.dw-room-editor [data-shape]>div select { width:auto; flex:1; }
+.dw-room-editor [data-shape]>div button { flex:1; }
+.dw-room-editor [data-openings] form { gap:7px!important; padding:12px!important; }
+
+[data-villa] form, [data-villa] [data-zones], [data-villa] [data-furniture] {
+  display:grid; gap:6px; margin:8px 0;
+}
+[data-villa] [data-site-zone], [data-villa] [data-roof], [data-villa] [data-fence] {
+  padding:8px; border:1px solid #dcd8cd; border-radius:6px;
+}
+[data-villa] label { display:flex; align-items:center; justify-content:space-between; gap:4px; }
+[data-villa] input[type=number] { width:5.4em; }

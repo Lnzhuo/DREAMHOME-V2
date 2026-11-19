@@ -1,0 +1,242 @@
+[
+  {
+    "key": "laundry",
+    "photoId": 31602334,
+    "filename": "laundry-pexels.jpg",
+    "url": "/room-references/laundry-pexels.jpg",
+    "author": "JAELEN KEMPSON",
+    "source": "https://www.pexels.com/photo/bright-laundry-room-with-washer-and-dryer-31602334/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/31602334/pexels-photo-31602334.jpeg",
+    "originalPath": "assets/source/room-references/pexels-31602334.jpg",
+    "originalSha256": "b9aa33b2c4ff33661cd0b19df0860b41838256161a8dcda03ea4429e3e76a2f4",
+    "originalBytes": 2716871,
+    "originalDimensions": [
+      6240,
+      4160
+    ],
+    "previewPath": "public/room-references/laundry-pexels.jpg",
+    "previewSha256": "7391c167bda3163470c33e2e4e6da49886c301feec1e4c18165a44f8e894e5d6",
+    "previewDimensions": [
+      1280,
+      853
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "洗衣房"
+  },
+  {
+    "key": "study",
+    "photoId": 8004011,
+    "filename": "study-pexels.jpg",
+    "url": "/room-references/study-pexels.jpg",
+    "author": "Darina Belonogova",
+    "source": "https://www.pexels.com/photo/minimalist-design-of-a-home-office-8004011/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/8004011/pexels-photo-8004011.jpeg",
+    "originalPath": "assets/source/room-references/pexels-8004011.jpg",
+    "originalSha256": "c3e6383d48ea05755602042ee5aa57bb1628bb9b063630e8a04f3344fc8a32c2",
+    "originalBytes": 562719,
+    "originalDimensions": [
+      3500,
+      2333
+    ],
+    "previewPath": "public/room-references/study-pexels.jpg",
+    "previewSha256": "41afb57a691a4a200df3873df7bee31125cb1b15f930150ac71789caf1f75b3e",
+    "previewDimensions": [
+      1280,
+      853
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "书房"
+  },
+  {
+    "key": "walk_in_closet",
+    "photoId": 39383567,
+    "filename": "walk_in_closet-pexels.jpg",
+    "url": "/room-references/walk_in_closet-pexels.jpg",
+    "author": "Curtis Adams",
+    "source": "https://www.pexels.com/photo/spacious-modern-walk-in-closet-design-39383567/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/39383567/pexels-photo-39383567.jpeg",
+    "originalPath": "assets/source/room-references/pexels-39383567.jpg",
+    "originalSha256": "8c5a4d78f075c1b73c803b0087c05dbf324796d020efe51e3aa697fab3299464",
+    "originalBytes": 1008378,
+    "originalDimensions": [
+      4000,
+      2667
+    ],
+    "previewPath": "public/room-references/walk_in_closet-pexels.jpg",
+    "previewSha256": "85dd4276679e8654e49687a4ecd6c5249bea2b6d3c7000c927d117a7607ba4a4",
+    "previewDimensions": [
+      1280,
+      853
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "衣帽间"
+  },
+  {
+    "key": "entryway",
+    "photoId": 6905779,
+    "filename": "entryway-pexels.jpg",
+    "url": "/room-references/entryway-pexels.jpg",
+    "author": "Get Lost Mike",
+    "source": "https://www.pexels.com/photo/interior-design-of-a-house-6905779/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/6905779/pexels-photo-6905779.jpeg",
+    "originalPath": "assets/source/room-references/pexels-6905779.jpg",
+    "originalSha256": "1b7b1f7bf18ab6ca53e294baa23f8ea4356e239dd8ea1b501b3ea93b221ecbf2",
+    "originalBytes": 855879,
+    "originalDimensions": [
+      4000,
+      2667
+    ],
+    "previewPath": "public/room-references/entryway-pexels.jpg",
+    "previewSha256": "c67d656d85979a92526a96027c3bd6dd89c7fc06dc65497adf81516b4c2be8e1",
+    "previewDimensions": [
+      1280,
+      853
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "玄关"
+  },
+  {
+    "key": "corridor",
+    "photoId": 6046819,
+    "filename": "corridor-pexels.jpg",
+    "url": "/room-references/corridor-pexels.jpg",
+    "author": "Skylar Kang",
+    "source": "https://www.pexels.com/photo/long-hallway-with-parquet-in-residential-building-6046819/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/6046819/pexels-photo-6046819.jpeg",
+    "originalPath": "assets/source/room-references/pexels-6046819.jpg",
+    "originalSha256": "f45863d4953a7b552745452b0fb4a3f235c34af240730f84a0e5984f678c5ea0",
+    "originalBytes": 766003,
+    "originalDimensions": [
+      2448,
+      3696
+    ],
+    "previewPath": "public/room-references/corridor-pexels.jpg",
+    "previewSha256": "dfb7bcdf113323d6b63a6d55162a2f1879bbc37d5ff50fc8a4c9b2fe283f85fd",
+    "previewDimensions": [
+      848,
+      1280
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "走廊"
+  },
+  {
+    "key": "balcony",
+    "photoId": 7534285,
+    "filename": "balcony-pexels.jpg",
+    "url": "/room-references/balcony-pexels.jpg",
+    "author": "Max Vakhtbovych",
+    "source": "https://www.pexels.com/photo/chairs-and-coffee-table-placed-in-patio-of-contemporary-apartment-7534285/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/7534285/pexels-photo-7534285.jpeg",
+    "originalPath": "assets/source/room-references/pexels-7534285.jpg",
+    "originalSha256": "a340962aae69b849d67db9277eda64ca34e51ac7c5370a00d08fa09e78f1dfba",
+    "originalBytes": 2881954,
+    "originalDimensions": [
+      7314,
+      4881
+    ],
+    "previewPath": "public/room-references/balcony-pexels.jpg",
+    "previewSha256": "25f4d11eb2b234edb71ea6362331d1e57a14560b459c580add9045a3e23207ae",
+    "previewDimensions": [
+      1280,
+      854
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "阳台"
+  },
+  {
+    "key": "dining_room",
+    "photoId": 7195894,
+    "filename": "dining_room-pexels.jpg",
+    "url": "/room-references/dining_room-pexels.jpg",
+    "author": "Max Vakhtbovych",
+    "source": "https://www.pexels.com/photo/table-in-dining-room-in-apartment-7195894/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/7195894/pexels-photo-7195894.jpeg",
+    "originalPath": "assets/source/room-references/pexels-7195894.jpg",
+    "originalSha256": "3ee2ff7db91489503affb034fb3c3208a0e76a7a679a5153b7b57f18b9729d1e",
+    "originalBytes": 1058410,
+    "originalDimensions": [
+      4760,
+      3177
+    ],
+    "previewPath": "public/room-references/dining_room-pexels.jpg",
+    "previewSha256": "fdd0272334159754f5f324bca8e7b4bafd1efb242e4d1b919536dba32da036e8",
+    "previewDimensions": [
+      1280,
+      854
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "餐厅"
+  },
+  {
+    "key": "storage",
+    "photoId": 9736531,
+    "filename": "storage-pexels.jpg",
+    "url": "/room-references/storage-pexels.jpg",
+    "author": "KoolShooters",
+    "source": "https://www.pexels.com/photo/wooden-storage-room-9736531/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "originalUrl": "https://images.pexels.com/photos/9736531/pexels-photo-9736531.jpeg",
+    "originalPath": "assets/source/room-references/pexels-9736531.jpg",
+    "originalSha256": "fbda49f8bd3d69db9b96c81cb26739364fc9b9ec5a331f42c4205a41532667d6",
+    "originalBytes": 4506338,
+    "originalDimensions": [
+      4480,
+      6720
+    ],
+    "previewPath": "public/room-references/storage-pexels.jpg",
+    "previewSha256": "9e04f2158292f3dac668171bc26e27fa9bc09b1b70ad1f63fd438fe85a419205",
+    "previewDimensions": [
+      853,
+      1280
+    ],
+    "previewProcessing": "EXIF orientation applied; proportional fit within 1280x1280; JPEG quality 85; no crop; displayed with CSS object-fit cover",
+    "downloadedAt": "2026-11-19",
+    "modified": true,
+    "sourceType": "pexels",
+    "usage": "仅作为住宅空间参考图，不代表房间模板的实际三维模型或尺寸；遵循 Pexels License，不单独出售原图，不暗示人物或品牌背书。",
+    "title": "储物间"
+  }
+]

@@ -1,0 +1,12 @@
+import {chromium} from 'playwright-core';
+import fs from 'node:fs/promises';
+import crypto from 'node:crypto';
+import { spawn } from 'node:child_process';
+import net from 'node:net';
+const reservation = net.createServer(); await new Promise(resolve => reservation.listen(0, '127.0.0.1', resolve));
+const port = String(reservation.address().port); await new Promise(resolve => reservation.close(resolve));
+const server = spawn(process.execPath, ['scripts/assets/thumbnail-server.mjs'], { env: { ...process.env, PORT: port, DREAMHOME_THUMBNAIL_BUILD: '1' }, stdio: 'ignore' });
+let ready = false; for (let i=0;i<100;i++) { try { const r = await fetch(`http://127.0.0.1:${port}/api/health`); if (r.ok) { ready=true; break; } } catch {} await new Promise(resolve=>setTimeout(resolve,100)); }
+if (!ready) { server.kill(); throw Error('离线缩略图服务启动失败'); }
+process.on('exit',()=>server.kill());
+const index=JSON.parse(await fs.readFile('data/library/index.json'));const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});const page=await browser.newPage();page.on('pageerror', e => { if (!String(e.message).includes('WebSocket closed without opened')) console.error(e); });await page.goto(`http://127.0.0.1:${port}/scripts/assets/thumbnail.html`);await page.waitForFunction(()=>window.ready);const failed=[];for(const [i,a] of index.assets.entries()){if(a.thumbnailUrl) continue;try{await page.evaluate(a=>window.runOne(a),a);const m=JSON.parse(await fs.readFile(`data/library/models/${a.id}/asset.json`));a.thumbnailUrl=m.thumbnailUrl;a.thumbnail=m.thumbnail;console.log(i+1,a.id)}catch(e){failed.push({id:a.id,error:e.message});console.error(a.id,e.message)}}await browser.close();server.kill();const latest=JSON.parse(await fs.readFile('data/library/index.json'));const processed=new Map(index.assets.filter(a=>a.thumbnailUrl).map(a=>[a.id,a]));for(const a of latest.assets){const item=processed.get(a.id);if(item && !a.thumbnailUrl){a.thumbnailUrl=item.thumbnailUrl;a.thumbnail=item.thumbnail;}}const temp=`data/library/index.json.${crypto.randomUUID()}.tmp`;await fs.writeFile(temp,JSON.stringify(latest,null,2)+'\n');await fs.rename(temp,'data/library/index.json');await fs.writeFile('data/library/thumbnail-report.json',JSON.stringify({count:index.assets.length-failed.length,failed},null,2)+'\n');
