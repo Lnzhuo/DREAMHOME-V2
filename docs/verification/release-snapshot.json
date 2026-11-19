@@ -1,0 +1,14 @@
+{
+  "capturedAt": "2026-11-19T10:48:42.851572+00:00",
+  "models": 183,
+  "materials": 69,
+  "planThumbnails": 183,
+  "indexSHA256": "ee2e178af9003b920e8dd6dc59d4f444ffce0c269c667ba0f9b48411c802136a",
+  "creditReservationsSHA256": "51f06bb85c7dd0a4a3b500003434fa24a6e4a724d6d048ecd86e7aab09a906aa",
+  "creditCsvSHA256": "490c6b1f3fb78bf32b3b0b22e48e9b13cbdef9663cba4ad1408e3ba9520a7ed3",
+  "reservedTasks": 76,
+  "lux3dArchived": 69,
+  "lux3dStrictReady": 41,
+  "reviewSHA256": "d19d0a03d4015978ac8dcb501cd69fcf9e4eac1c798fb6efee1850c7c2a74ed9",
+  "licenseCsvSHA256": "85b5f949b0e500881804cd56cb88e26c2268cc16c942de7f5b85c66e600aaa9c"
+}

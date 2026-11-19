@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-19T10:45:40.575Z",
+  "model": "dreamhome-qwen3-vl",
+  "prompt": "把选中的客厅原木茶几向右移10厘米，其他家具和房间保持原样。",
+  "status": 200,
+  "plan": {
+    "summary": "将选中的客厅原木茶几向右移动10厘米。",
+    "commands": [
+      {
+        "type": "move_asset",
+        "placementId": "home-three-bed-two-living-two-bath-living_room-0-0-1",
+        "position": {
+          "x": 1.789985,
+          "y": 0,
+          "z": 1.93544
+        }
+      }
+    ],
+    "questions": [],
+    "warnings": [],
+    "requiresConfirmation": true
+  },
+  "placed": 34,
+  "othersUnchanged": 33,
+  "undoRestored": true,
+  "pageErrors": []
+}
